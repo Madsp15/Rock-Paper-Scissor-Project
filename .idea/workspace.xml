@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/bll/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/player/Player.java" afterDir="false" />
     </list>
@@ -30,6 +29,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/julia/IdeaProjects/Rock-Paper-Scissor-Project",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
@@ -64,7 +64,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1677517463332</updated>
-      <workItem from="1677571939152" duration="1814000" />
+      <workItem from="1677571939152" duration="11645000" />
     </task>
     <servers />
   </component>
