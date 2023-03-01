@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qBlue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qGreen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qOrange.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qPurple.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qRed.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/qYellow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rps/gui/model/GameViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/gui/view/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +97,7 @@
       <workItem from="1677590221264" duration="367000" />
       <workItem from="1677661542959" duration="5751000" />
       <workItem from="1677668332664" duration="615000" />
-      <workItem from="1677694730852" duration="8704000" />
+      <workItem from="1677694730852" duration="9141000" />
     </task>
     <servers />
   </component>

@@ -187,9 +187,8 @@ public class GameViewController implements Initializable {
                 imageActiveRPCAI.setImage(paper);
         }
 
-        for (Result result: results) {
-            System.out.println(result.getRoundNumber() + ":::: " + result.getWinnerMove());
-        }
+        System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer() + " "
+                + results.get(results.size()-1).getType() + " with " + results.get(results.size()-1).getWinnerMove());
 
     }
 }
