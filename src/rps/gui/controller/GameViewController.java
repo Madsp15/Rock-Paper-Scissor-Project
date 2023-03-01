@@ -157,38 +157,41 @@ public class GameViewController implements Initializable {
     }
 
     public void playRound(Move move) {
-        ArrayList<Result> results = new ArrayList<>();
+        ArrayList<Result> results;
+        Result result;
 
         gameViewModel.playRound(move);
 
         results = gameViewModel.getHistoricResults();
-        if (results.get(results.size() - 1).getType().equals(ResultType.Tie)) {
+        result = results.get(results.size()-1);
+
+        if (result.getType().equals(ResultType.Tie)) {
             if (move.equals(Move.Rock))
                 imageActiveRPCAI.setImage(rock);
             if (move.equals(Move.Paper))
                 imageActiveRPCAI.setImage(paper);
             if (move.equals(Move.Scissor))
-                imageActiveRPCAI.setImage(paper);
+                imageActiveRPCAI.setImage(scissors);
         }
-        if (results.get(results.size() - 1).getType().equals(ResultType.Win) && results.get(results.size() - 1).getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {
-            if (results.get(results.size() - 1).getWinnerMove().equals(Move.Rock))
+        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {
+            if (result.getWinnerMove().equals(Move.Rock))
                 imageActiveRPCAI.setImage(rock);
-            if (results.get(results.size() - 1).getWinnerMove().equals(Move.Paper))
+            if (result.getWinnerMove().equals(Move.Paper))
                 imageActiveRPCAI.setImage(paper);
             if (results.get(results.size() - 1).getWinnerMove().equals(Move.Scissor))
-                imageActiveRPCAI.setImage(paper);
+                imageActiveRPCAI.setImage(scissors);
         }
-        if (results.get(results.size() - 1).getType().equals(ResultType.Win) && results.get(results.size() - 1).getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {
-            if (results.get(results.size() - 1).getLoserMove().equals(Move.Rock))
+        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {
+            if (result.getLoserMove().equals(Move.Rock))
                 imageActiveRPCAI.setImage(rock);
-            if (results.get(results.size() - 1).getLoserMove().equals(Move.Paper))
+            if (result.getLoserMove().equals(Move.Paper))
                 imageActiveRPCAI.setImage(paper);
-            if (results.get(results.size() - 1).getLoserMove().equals(Move.Scissor))
-                imageActiveRPCAI.setImage(paper);
+            if (result.getLoserMove().equals(Move.Scissor))
+                imageActiveRPCAI.setImage(scissors);
         }
 
-        System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer() + " "
-                + results.get(results.size()-1).getType() + " with " + results.get(results.size()-1).getWinnerMove());
+        System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
+                + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
 
     }
 }
