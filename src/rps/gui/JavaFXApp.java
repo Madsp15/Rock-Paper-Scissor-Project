@@ -12,6 +12,9 @@ import rps.bll.player.Player;
 import rps.bll.player.PlayerType;
 import rps.bll.game.*;
 import rps.bll.player.*;
+import rps.gui.controller.GameViewController;
+import rps.gui.model.GameViewModel;
+
 import java.util.Random;
 
 /**
@@ -27,21 +30,25 @@ public class JavaFXApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        String playerName = "Player1";
+        IPlayer bot = new Player(getRandomBotName(), PlayerType.AI);
+        IPlayer human = new Player(playerName, PlayerType.Human);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/rps/gui/view/GameView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/rps/gui/view/GameView.fxml"));
+        Parent root = loader.load();
+
+        GameViewModel model = new GameViewModel(human, bot);
+        GameViewController controller = loader.getController();
+        controller.setGameViewModel(model);
+
         stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
         stage.setScene(new Scene(root));
+
         stage.show();
 
     }
 
 
-    IPlayer bot = new Player(getRandomBotName(), PlayerType.AI);
-    String playerName = "Player1";
-    IPlayer human = new Player(playerName, PlayerType.Human);
-
-
-    GameManager ge = new GameManager(human, bot);
     private String getRandomBotName() {
         String[] botNames = new String[] {
                 "Wallee",
