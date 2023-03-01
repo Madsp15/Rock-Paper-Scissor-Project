@@ -1,10 +1,7 @@
 package rps.bll.player;
 
 //Project imports
-import rps.bll.game.IGameState;
-import rps.bll.game.Move;
-import rps.bll.game.Result;
-import rps.bll.game.ResultType;
+import rps.bll.game.*;
 
 //Java imports
 import java.util.ArrayList;
@@ -50,37 +47,50 @@ public class Player implements IPlayer {
     public Move doMove(IGameState state) {
         //Historic data to analyze and decide next move...
         ArrayList<Result> results = (ArrayList<Result>) state.getHistoricResults();
-        int rock = 0;
-        int paper = 0;
-        int scissor = 0;
+
 
         //50% chance to use simpleNextSequence
         Random rnd = new Random();
         int fiftyFifty = rnd.nextInt(((2-1)+1));
         if(fiftyFifty == 1 && results.size()>0){
+            return simpleNextSequence(results);
+        }
+        else{
+            return previousThreeGuess(results);
+        }
 
-            //If AI won last round then it picks the next move in the sequence
-            if(results.get(results.size()-1).getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
-                if(results.get(results.size()-1).getWinnerMove().equals(Move.Rock))
-                    return Move.Paper;
-                if(results.get(results.size()-1).getWinnerMove().equals(Move.Paper))
-                    return Move.Scissor;
-                if(results.get(results.size()-1).getWinnerMove().equals(Move.Scissor))
-                    return Move.Rock;
+    }
 
-            //If last round was a tie, AI does the same move
-            } else if (results.get(results.size()-1).getType().equals(ResultType.Tie)) {
-                return results.get(results.size()-1).getLoserMove();
-            }
-
-            //Otherwise it won and moves ahead two moves in the sequence
+    public Move simpleNextSequence(ArrayList<Result> results){
+        //If AI won last round then it picks the previous move in the sequence
+        if(results.get(results.size()-1).getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
             if(results.get(results.size()-1).getWinnerMove().equals(Move.Rock))
                 return Move.Scissor;
             if(results.get(results.size()-1).getWinnerMove().equals(Move.Paper))
                 return Move.Rock;
             if(results.get(results.size()-1).getWinnerMove().equals(Move.Scissor))
                 return Move.Paper;
+
+            //If last round was a tie, AI does the same move
+        } else if (results.get(results.size()-1).getType().equals(ResultType.Tie)) {
+            return results.get(results.size()-1).getLoserMove();
         }
+
+        //Otherwise it won and moves back two moves in the sequence
+        if(results.get(results.size()-1).getWinnerMove().equals(Move.Rock))
+            return Move.Paper;
+        if(results.get(results.size()-1).getWinnerMove().equals(Move.Paper))
+            return Move.Scissor;
+        if(results.get(results.size()-1).getWinnerMove().equals(Move.Scissor))
+            return Move.Rock;
+
+        return null;
+    }
+
+    public Move previousThreeGuess(ArrayList<Result> results){
+        int rock = 0;
+        int paper = 0;
+        int scissor = 0;
 
         if(results.size()<5) {
             Random rd = new Random();
