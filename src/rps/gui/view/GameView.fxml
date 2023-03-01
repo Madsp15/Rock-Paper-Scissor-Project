@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -8,12 +7,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="400.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
    <children>
-      <BorderPane layoutX="191.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <VBox prefHeight="103.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
@@ -24,17 +24,17 @@
                   </Line>
                   <HBox alignment="CENTER" prefHeight="99.0" prefWidth="600.0">
                      <children>
-                        <ImageView fx:id="imageScissorButton" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageRockButton" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#clickRock" pickOnBounds="true" preserveRatio="true" styleClass="image-view-hover">
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="imageRockButton" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imagePaperButton" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#clickPaper" pickOnBounds="true" preserveRatio="true" styleClass="image-view-hover">
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="imagePaperButton" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageScissorButton" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#clickScissor" pickOnBounds="true" preserveRatio="true" styleClass="image-view-hover">
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
@@ -47,47 +47,62 @@
          <center>
             <HBox prefHeight="218.0" prefWidth="696.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="CENTER" prefHeight="217.0" prefWidth="110.0">
+                  <VBox alignment="CENTER" prefHeight="216.0" prefWidth="250.0">
                      <children>
-                        <Label fx:id="lablePlayerName" prefHeight="18.0" prefWidth="79.0" text="Player name" />
+                        <Label fx:id="labelHumanName" prefHeight="18.0" prefWidth="79.0" text="Player name">
+                           <VBox.margin>
+                              <Insets left="50.0" right="50.0" />
+                           </VBox.margin></Label>
+                        <ImageView fx:id="imageHumanPlayer" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </ImageView>
                      </children>
                   </VBox>
-                  <ImageView fx:id="pictureActiveRPCPlayer" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageActiveRPCPlayer" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
                      <HBox.margin>
-                        <Insets />
+                        <Insets top="50.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="34.0" text=" VS">
+                  <ImageView fx:id="imageVersus" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
                      <HBox.margin>
-                        <Insets left="10.0" top="100.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets left="10.0" right="10.0" />
-                     </padding>
-                  </Label>
-                  <ImageView fx:id="pictureActiveRPCAI" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets />
+                        <Insets top="84.0" />
                      </HBox.margin>
                   </ImageView>
-                  <VBox prefHeight="200.0" prefWidth="110.0">
+                  <ImageView fx:id="imageActiveRPCAI" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox prefHeight="216.0" prefWidth="250.0">
                      <children>
-                        <Label fx:id="lableAIName" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="152.0" text="Robot name" textAlignment="CENTER">
+                        <Label fx:id="labelAIName" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="152.0" text="Robot name" textAlignment="CENTER">
                            <VBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="50.0" right="50.0" />
                            </VBox.margin></Label>
-                        <ImageView fx:id="pictureAI" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageAIPlayer" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
                            <image>
                               <Image url="@/Pictures/2B.png" />
                            </image>
                            <VBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="50.0" right="50.0" />
                            </VBox.margin>
                         </ImageView>
-                        <MFXTextField fx:id="textAI" alignment="TOP_CENTER" prefHeight="67.0" prefWidth="150.0" text="Textbox">
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin></MFXTextField>
+                        <StackPane prefHeight="50.0" prefWidth="150.0">
+                           <children>
+                              <ImageView fx:id="imageChatBox" fitHeight="50.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
+                                 <image>
+                                    <Image url="@../../../../Resouces/Pictures/speech_bubble.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="labelAIChat" styleClass="label-chat" stylesheets="@style.css" text="prepare to die">
+                                 <StackPane.margin>
+                                    <Insets top="10.0" />
+                                 </StackPane.margin>
+                              </Label>
+                           </children>
+                        </StackPane>
                      </children>
                   </VBox>
                </children>
@@ -106,7 +121,7 @@
                               <Insets left="320.0" top="10.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lableScore" text="0 - 0">
+                        <Label fx:id="labelScore" text="0 - 0">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
