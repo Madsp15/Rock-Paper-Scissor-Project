@@ -4,6 +4,7 @@ package rps.bll.player;
 import rps.bll.game.IGameState;
 import rps.bll.game.Move;
 import rps.bll.game.Result;
+import rps.bll.game.ResultType;
 
 //Java imports
 import java.util.ArrayList;
@@ -53,11 +54,37 @@ public class Player implements IPlayer {
         int paper = 0;
         int scissor = 0;
 
-        //Implement better AI here...
+        //50% chance to use simpleNextSequence
+        Random rnd = new Random();
+        int fiftyFifty = rnd.nextInt(((2-1)+1));
+        if(fiftyFifty == 1 && results.size()>0){
+
+            //If AI won last round then it picks the next move in the sequence
+            if(results.get(results.size()-1).getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
+                if(results.get(results.size()-1).getWinnerMove().equals(Move.Rock))
+                    return Move.Paper;
+                if(results.get(results.size()-1).getWinnerMove().equals(Move.Paper))
+                    return Move.Scissor;
+                if(results.get(results.size()-1).getWinnerMove().equals(Move.Scissor))
+                    return Move.Rock;
+
+            //If last round was a tie, AI does the same move
+            } else if (results.get(results.size()-1).getType().equals(ResultType.Tie)) {
+                return results.get(results.size()-1).getLoserMove();
+            }
+
+            //Otherwise it won and moves ahead two moves in the sequence
+            if(results.get(results.size()-1).getWinnerMove().equals(Move.Rock))
+                return Move.Scissor;
+            if(results.get(results.size()-1).getWinnerMove().equals(Move.Paper))
+                return Move.Rock;
+            if(results.get(results.size()-1).getWinnerMove().equals(Move.Scissor))
+                return Move.Paper;
+        }
+
         if(results.size()<5) {
             Random rd = new Random();
             int rdNum = rd.nextInt(((5 - 1) + 1));
-            System.out.println(rdNum);
             if (rdNum == 0)
                 return Move.Rock;
             if (rdNum >= 2)
@@ -66,7 +93,6 @@ public class Player implements IPlayer {
                 return Move.Scissor;
         }
         for (int i = results.size() - 3; i < results.size(); i++) {
-            System.out.println(results.get(i).getWinnerMove());
             if (results.get(i).getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {
                 if (results.get(i).getWinnerMove().equals(Move.Rock))
                     rock++;
@@ -84,25 +110,21 @@ public class Player implements IPlayer {
             }
         }
         if (rock > paper && rock > scissor) {
-            System.out.println(0);
             if (paper >= scissor)
                 return Move.Rock;
             return Move.Scissor;
         }
         if (paper > rock && paper > scissor) {
-            System.out.println(1);
             if (scissor >= rock)
                 return Move.Paper;
             return Move.Rock;
         }
         if (scissor > paper && scissor > rock){
-            System.out.println(2);
             if (paper >= rock)
                 return Move.Paper;
             return Move.Scissor;
         }
         if(rock == paper && paper == scissor) {
-            System.out.println(3);
             return Move.Paper;
         }
 
