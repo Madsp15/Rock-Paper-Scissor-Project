@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,10 +24,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CharacterSelectionController implements Initializable {
-
-    GameViewController game = new GameViewController();
-    @FXML
-    private CheckBox checkBoxWithHealth, checkBoxWithoutHealth;
 
     @FXML
     private Label labelSelectedZucc, labelSelectedPain, labelSelectedBoulder, labelSelectedCat,
@@ -46,27 +43,33 @@ public class CharacterSelectionController implements Initializable {
 
     private String humanName = "";
     private String aiName = "";
+    private Image humanImage;
+    private Image aiImage;
 
 
     public void clickZucc(MouseEvent mouseEvent) {
         clearSelectedHuman();
+        humanImage = zucc;
         humanName = "The Zucc";
         labelSelectedZucc.setText("Selected");
     }
 
     public void clickPain(MouseEvent mouseEvent) {
+        humanImage = pain;
         clearSelectedHuman();
         humanName = "Harrold of Pain";
         labelSelectedPain.setText("Selected");
     }
 
     public void clickBoulder(MouseEvent mouseEvent) {
+        humanImage = boulder;
         clearSelectedHuman();
         humanName = "The Boulder";
         labelSelectedBoulder.setText("Selected");
     }
 
     public void clickCat(MouseEvent mouseEvent) {
+        humanImage = cat;
         clearSelectedHuman();
         humanName = "Weird Cat";
         labelSelectedCat.setText("Selected");
@@ -80,18 +83,21 @@ public class CharacterSelectionController implements Initializable {
     }
 
     public void clickDalek(MouseEvent mouseEvent) {
+        aiImage = dalek;
         clearSelectedAI();
         aiName = "Dalek";
         labelSelectedDalek.setText("Selected");
     }
 
     public void clickTypeB(MouseEvent mouseEvent) {
+        aiImage = typeB;
         clearSelectedAI();
         aiName = "YoRHa No.2 Type B";
         labelSelectedTypeB.setText("Selected");
     }
 
     public void clickHall(MouseEvent mouseEvent) {
+        aiImage = hall;
         clearSelectedAI();
         aiName = "HALL 9000";
         labelSelectedHall.setText("Selected");

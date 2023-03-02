@@ -55,11 +55,6 @@ public class GameViewController implements Initializable {
     private final Image scissors = new Image("Pictures/scissors.png");
     private final Image questionR = new Image("Pictures/qRed.png");
     private final Image questionB = new Image("Pictures/qBlue.png");
-
-    private final Image WallE = new Image("Pictures/WALL-E.png");
-    private final Image HALL9000 = new Image("Pictures/HALL 9000.png");
-    private final Image DALEK = new Image("Pictures/Dalek.png");
-    private final Image TwoB = new Image("Pictures/YoRHa No.2 Type B.png");
     private final List<Image> questionMarks = new ArrayList<>();
     private final Image health1 = new Image("Pictures/heartred.png");
     private final Image health2 = new Image("Pictures/heartgreen.png");
@@ -67,15 +62,11 @@ public class GameViewController implements Initializable {
     private final Image health4 = new Image("Pictures/heartpurple.png");
     private final Image health5 = new Image("Pictures/heartblue.png");
     private final Image health0 = new Image("Pictures/heartgrey.png");
-    private List<Image> questionMarks = new ArrayList<>();
     private GameViewModel gameViewModel;
     private Timeline timeline;
     private int currentIndex = 0;
     private int cycleCount = 0;
-    private Image humanImage;
-    private Image aiImage;
     private boolean isCycling = false;
-    String botName ="";
     public static boolean isHealthOn = false;
 
 
@@ -323,13 +314,12 @@ public class GameViewController implements Initializable {
     }
 
     public void setAIHumanImage(){
-        this.humanImage = gameViewModel.getHumanImage();
-        this.aiImage = gameViewModel.getAiImage();
+        Image humanImage = gameViewModel.getHumanImage();
+        Image aiImage = gameViewModel.getAiImage();
         imageHumanPlayer.setImage(humanImage);
         imageAIPlayer.setImage(aiImage);
     }
 
-}
     public void loseHealth(ArrayList<Result> results) {
         int humanScore = 0;
         int aiScore = 0;
