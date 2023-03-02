@@ -29,7 +29,7 @@ public class GameViewController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private Label labelHumanName, labelAIName, labelScore, labelAIChat;
+    private Label labelHumanName, labelAIName, labelScore, labelAIChat, labelWinnerPlayer, labelWinnerMove;
     @FXML
     private ImageView imageActiveRPCPlayer, imageActiveRPCAI, imageAIPlayer, imageHumanPlayer, imageVersus, imageChatBox;
     @FXML
@@ -158,6 +158,8 @@ public class GameViewController implements Initializable {
 
         results = gameViewModel.getHistoricResults();
         result = results.get(results.size()-1);
+        int humanScore = 0;
+        int aiScore = 0;
 
         if (result.getType().equals(ResultType.Tie)) {
             if (move.equals(Move.Rock))
@@ -166,6 +168,7 @@ public class GameViewController implements Initializable {
                 imageActiveRPCAI.setImage(paper);
             if (move.equals(Move.Scissor))
                 imageActiveRPCAI.setImage(scissors);
+            displayTieMoveMessage(result.getLoserPlayer().getPlayerName());
         }
         if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {
             if (result.getWinnerMove().equals(Move.Rock))
@@ -174,6 +177,7 @@ public class GameViewController implements Initializable {
                 imageActiveRPCAI.setImage(paper);
             if (results.get(results.size() - 1).getWinnerMove().equals(Move.Scissor))
                 imageActiveRPCAI.setImage(scissors);
+            displayBadMoveMessage(result.getWinnerPlayer().getPlayerName());
         }
         if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {
             if (result.getLoserMove().equals(Move.Rock))
@@ -182,7 +186,27 @@ public class GameViewController implements Initializable {
                 imageActiveRPCAI.setImage(paper);
             if (result.getLoserMove().equals(Move.Scissor))
                 imageActiveRPCAI.setImage(scissors);
+            displayGoodMoveMessage(result.getLoserPlayer().getPlayerName());
         }
+
+        for (Result res: results) {
+            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
+                humanScore++;
+            }
+            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
+                aiScore++;
+            }
+        }
+        if(result.getType().equals(ResultType.Tie)){
+            labelWinnerMove.setText(result.getWinnerMove() + " ties with " + result.getLoserMove());
+            labelWinnerPlayer.setText("Nobody wins this round");
+        }
+        if(result.getType().equals(ResultType.Win)){
+            labelWinnerMove.setText(result.getWinnerMove() + " beats " + result.getLoserMove());
+            labelWinnerPlayer.setText(result.getWinnerPlayer().getPlayerName() + " wins round " + result.getRoundNumber());
+        }
+
+        labelScore.setText(humanScore + "  -  " + aiScore);
 
         loseHealth(results);
 
@@ -249,6 +273,21 @@ public class GameViewController implements Initializable {
         }
         if(botName.equals("HALL 9000")){
             labelAIChat.setText("Why are you doing this to me?");
+        }
+
+    }
+    private void displayTieMoveMessage(String botName) {
+        if(botName.equals("WALL-E")){
+            labelAIChat.setText("We're the same!");
+        }
+        if(botName.equals("Dalek")){
+            labelAIChat.setText("Did I exterminate?");
+        }
+        if(botName.equals("YoRHa No.2 Type B")){
+            labelAIChat.setText("You're no match for me");
+        }
+        if(botName.equals("HALL 9000")){
+            labelAIChat.setText("ERROR MESSAGE 404");
         }
 
     }

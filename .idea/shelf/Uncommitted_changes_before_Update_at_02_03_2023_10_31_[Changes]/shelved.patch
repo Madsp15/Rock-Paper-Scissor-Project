@@ -1,0 +1,213 @@
+Index: src/rps/gui/view/style.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.label-chat {\r\n    -fx-font-size: 8pt;\r\n    -fx-text-fill: #000000;\r\n    -fx-font-family: \"Courier New\";\r\n}\r\n.image-view-normal:hover{\r\n    -fx-scale-x: 1.0;\r\n    -fx-scale-y: 1.0;\r\n    -fx-scale-z: 1.0;\r\n}\r\n\r\n.image-view-fixed{\r\n    -fx-scale-x: 0.8;\r\n    -fx-scale-y: 0.8;\r\n    -fx-scale-z: 0.8;\r\n}\r\n\r\n.image-view-hover:hover {\r\n    -fx-scale-x: 1.2;\r\n    -fx-scale-y: 1.2;\r\n    -fx-scale-z: 1.2;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/view/style.css b/src/rps/gui/view/style.css
+--- a/src/rps/gui/view/style.css	(revision a69c79ccbd71b1a9a643a7638eea20a762f92e41)
++++ b/src/rps/gui/view/style.css	(date 1677746601594)
+@@ -3,6 +3,13 @@
+     -fx-text-fill: #000000;
+     -fx-font-family: "Courier New";
+ }
++
++.label-score {
++    -fx-font-size: 30pt;
++    -fx-text-fill: #000000;
++    -fx-font-family: "Courier New";
++}
++
+ .image-view-normal:hover{
+     -fx-scale-x: 1.0;
+     -fx-scale-y: 1.0;
+Index: src/rps/gui/controller/GameViewController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package rps.gui.controller;\r\n\r\n// Java imports\r\nimport io.github.palexdev.materialfx.controls.MFXTextField;\r\nimport javafx.animation.KeyFrame;\r\nimport javafx.animation.Timeline;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.util.Duration;\r\nimport rps.bll.game.Move;\r\nimport rps.bll.game.Result;\r\nimport rps.bll.game.ResultType;\r\nimport rps.bll.player.PlayerType;\r\nimport rps.gui.model.GameViewModel;\r\n\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.ResourceBundle;\r\nimport java.util.Timer;\r\n\r\n/**\r\n *\r\n * @author smsj\r\n */\r\npublic class GameViewController implements Initializable {\r\n    @FXML\r\n    private AnchorPane anchorPane;\r\n    @FXML\r\n    private Label labelHumanName, labelAIName, labelScore, labelAIChat;\r\n    @FXML\r\n    private ImageView imageActiveRPCPlayer, imageActiveRPCAI, imageAIPlayer, imageHumanPlayer, imageVersus, imageChatBox;\r\n    @FXML\r\n    private MFXTextField textFieldAI;\r\n    @FXML\r\n    private ImageView imageRockButton, imagePaperButton, imageScissorButton;\r\n    private final Image chatBox = new Image(\"Pictures/speech_bubble.png\");\r\n    private final Image versus = new Image(\"Pictures/versus.png\");\r\n    private final Image rock = new Image(\"Pictures/rock.png\");\r\n    private final Image paper = new Image(\"Pictures/paper.png\");\r\n    private final Image scissors = new Image(\"Pictures/scissors.png\");\r\n    private final Image questionR = new Image(\"Pictures/qRed.png\");\r\n    private final Image questionB = new Image(\"Pictures/qBlue.png\");\r\n    private List<Image> questionMarks = new ArrayList<>();\r\n    private GameViewModel gameViewModel;\r\n    private Timeline timeline;\r\n    private int currentIndex = 0;\r\n    private int cycleCount = 0;\r\n\r\n\r\n    /**\r\n     * Initializes the controller class.\r\n     */\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle rb) {\r\n        imageChatBox.setImage(chatBox);\r\n        imageVersus.setImage(versus);\r\n        imageRockButton.setImage(rock);\r\n        imagePaperButton.setImage(paper);\r\n        imageScissorButton.setImage(scissors);\r\n        imageActiveRPCPlayer.setImage(questionR);\r\n        imageActiveRPCAI.setImage(questionB);\r\n        questionMarks.clear();\r\n        questionMarks.add(rock);\r\n        questionMarks.add(paper);\r\n        questionMarks.add(scissors);\r\n    }\r\n\r\n    public void setGameViewModel(GameViewModel model){\r\n        this.gameViewModel = model;\r\n    }\r\n\r\n    public void clickRock(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(rock);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(rock);\r\n                playRound(Move.Rock);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void clickPaper(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(paper);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(paper);\r\n                playRound(Move.Paper);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void clickScissor(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(scissors);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(scissors);\r\n                playRound(Move.Scissor);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void playRound(Move move) {\r\n        ArrayList<Result> results;\r\n        Result result;\r\n\r\n        gameViewModel.playRound(move);\r\n\r\n        results = gameViewModel.getHistoricResults();\r\n        result = results.get(results.size()-1);\r\n\r\n        if (result.getType().equals(ResultType.Tie)) {\r\n            if (move.equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (move.equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (move.equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n        }\r\n        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {\r\n            if (result.getWinnerMove().equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (result.getWinnerMove().equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (results.get(results.size() - 1).getWinnerMove().equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n        }\r\n        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {\r\n            if (result.getLoserMove().equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (result.getLoserMove().equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (result.getLoserMove().equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n        }\r\n\r\n        System.out.println(results.get(results.size()-1).getRoundNumber() + \": \" + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + \" \"\r\n                + results.get(results.size()-1).getType() + \"s with \" + results.get(results.size()-1).getWinnerMove());\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/controller/GameViewController.java b/src/rps/gui/controller/GameViewController.java
+--- a/src/rps/gui/controller/GameViewController.java	(revision a69c79ccbd71b1a9a643a7638eea20a762f92e41)
++++ b/src/rps/gui/controller/GameViewController.java	(date 1677747648420)
+@@ -32,7 +32,7 @@
+     @FXML
+     private AnchorPane anchorPane;
+     @FXML
+-    private Label labelHumanName, labelAIName, labelScore, labelAIChat;
++    private Label labelHumanName, labelAIName, labelScore, labelAIChat, labelWinnerPlayer, labelWinnerMove;
+     @FXML
+     private ImageView imageActiveRPCPlayer, imageActiveRPCAI, imageAIPlayer, imageHumanPlayer, imageVersus, imageChatBox;
+     @FXML
+@@ -155,6 +155,8 @@
+ 
+         results = gameViewModel.getHistoricResults();
+         result = results.get(results.size()-1);
++        int humanScore = 0;
++        int aiScore = 0;
+ 
+         if (result.getType().equals(ResultType.Tie)) {
+             if (move.equals(Move.Rock))
+@@ -181,8 +183,28 @@
+                 imageActiveRPCAI.setImage(scissors);
+         }
+ 
+-        System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
+-                + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
++        for (Result res: results) {
++            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
++                humanScore++;
++            }
++            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
++                aiScore++;
++            }
++        }
++        if(result.getType().equals(ResultType.Tie)){
++            labelWinnerMove.setText(result.getWinnerMove() + " ties with " + result.getLoserMove());
++            labelWinnerPlayer.setText("Nobody wins this round");
++        }
++        if(result.getType().equals(ResultType.Win)){
++            labelWinnerMove.setText(result.getWinnerMove() + " beats " + result.getLoserMove());
++            labelWinnerPlayer.setText(result.getWinnerPlayer().getPlayerName() + " wins round " + result.getRoundNumber());
++        }
++
++        labelScore.setText(humanScore + "  -  " + aiScore);
++
++
++
++        System.out.println("Score: " + humanScore + " --- " + aiScore);
+ 
+     }
+ }
+Index: src/rps/gui/view/GameView.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.BorderPane?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.shape.Line?>\r\n\r\n<AnchorPane fx:id=\"anchorPane\" prefHeight=\"400.0\" prefWidth=\"660.0\" stylesheets=\"@style.css\" xmlns=\"http://javafx.com/javafx/19\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"rps.gui.controller.GameViewController\">\r\n   <children>\r\n      <BorderPane layoutX=\"200.0\" layoutY=\"100.0\" prefHeight=\"400.0\" prefWidth=\"600.0\" AnchorPane.bottomAnchor=\"0.0\" AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n         <bottom>\r\n            <VBox prefHeight=\"103.0\" prefWidth=\"600.0\" BorderPane.alignment=\"CENTER\">\r\n               <children>\r\n                  <Line endX=\"600.0\" startX=\"-100.0\">\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"5.0\" top=\"5.0\" />\r\n                     </VBox.margin>\r\n                  </Line>\r\n                  <HBox alignment=\"CENTER\" prefHeight=\"99.0\" prefWidth=\"600.0\">\r\n                     <children>\r\n                        <ImageView fx:id=\"imageRockButton\" fitHeight=\"100.0\" fitWidth=\"100.0\" onMouseClicked=\"#clickRock\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-hover\">\r\n                           <HBox.margin>\r\n                              <Insets bottom=\"5.0\" left=\"15.0\" right=\"15.0\" top=\"5.0\" />\r\n                           </HBox.margin>\r\n                        </ImageView>\r\n                        <ImageView fx:id=\"imagePaperButton\" fitHeight=\"100.0\" fitWidth=\"100.0\" onMouseClicked=\"#clickPaper\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-hover\">\r\n                           <HBox.margin>\r\n                              <Insets bottom=\"5.0\" left=\"15.0\" right=\"15.0\" top=\"5.0\" />\r\n                           </HBox.margin>\r\n                        </ImageView>\r\n                        <ImageView fx:id=\"imageScissorButton\" fitHeight=\"100.0\" fitWidth=\"100.0\" onMouseClicked=\"#clickScissor\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-hover\">\r\n                           <HBox.margin>\r\n                              <Insets bottom=\"5.0\" left=\"15.0\" right=\"15.0\" top=\"5.0\" />\r\n                           </HBox.margin>\r\n                        </ImageView>\r\n                     </children>\r\n                  </HBox>\r\n               </children>\r\n            </VBox>\r\n         </bottom>\r\n         <center>\r\n            <HBox prefHeight=\"218.0\" prefWidth=\"696.0\" BorderPane.alignment=\"CENTER\">\r\n               <children>\r\n                  <VBox alignment=\"CENTER\" prefHeight=\"216.0\" prefWidth=\"250.0\">\r\n                     <children>\r\n                        <Label fx:id=\"labelHumanName\" prefHeight=\"18.0\" prefWidth=\"79.0\" text=\"Player name\">\r\n                           <VBox.margin>\r\n                              <Insets left=\"50.0\" right=\"50.0\" />\r\n                           </VBox.margin></Label>\r\n                        <ImageView fx:id=\"imageHumanPlayer\" fitHeight=\"150.0\" fitWidth=\"150.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-normal\">\r\n                           <VBox.margin>\r\n                              <Insets bottom=\"50.0\" />\r\n                           </VBox.margin>\r\n                        </ImageView>\r\n                     </children>\r\n                  </VBox>\r\n                  <ImageView fx:id=\"imageActiveRPCPlayer\" fitHeight=\"100.0\" fitWidth=\"100.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-fixed\">\r\n                     <HBox.margin>\r\n                        <Insets top=\"50.0\" />\r\n                     </HBox.margin>\r\n                  </ImageView>\r\n                  <ImageView fx:id=\"imageVersus\" fitHeight=\"35.0\" fitWidth=\"35.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-normal\">\r\n                     <HBox.margin>\r\n                        <Insets top=\"84.0\" />\r\n                     </HBox.margin>\r\n                  </ImageView>\r\n                  <ImageView fx:id=\"imageActiveRPCAI\" fitHeight=\"100.0\" fitWidth=\"100.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-fixed\">\r\n                     <HBox.margin>\r\n                        <Insets top=\"50.0\" />\r\n                     </HBox.margin>\r\n                  </ImageView>\r\n                  <VBox prefHeight=\"216.0\" prefWidth=\"250.0\">\r\n                     <children>\r\n                        <Label fx:id=\"labelAIName\" alignment=\"CENTER\" contentDisplay=\"CENTER\" prefHeight=\"18.0\" prefWidth=\"152.0\" text=\"Robot name\" textAlignment=\"CENTER\">\r\n                           <VBox.margin>\r\n                              <Insets left=\"50.0\" right=\"50.0\" />\r\n                           </VBox.margin></Label>\r\n                        <ImageView fx:id=\"imageAIPlayer\" fitHeight=\"150.0\" fitWidth=\"150.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-normal\">\r\n                           <image>\r\n                              <Image url=\"@/Pictures/2B.png\" />\r\n                           </image>\r\n                           <VBox.margin>\r\n                              <Insets left=\"50.0\" right=\"50.0\" />\r\n                           </VBox.margin>\r\n                        </ImageView>\r\n                        <StackPane prefHeight=\"50.0\" prefWidth=\"150.0\">\r\n                           <children>\r\n                              <ImageView fx:id=\"imageChatBox\" fitHeight=\"50.0\" fitWidth=\"150.0\" pickOnBounds=\"true\" preserveRatio=\"true\" styleClass=\"image-view-normal\">\r\n                                 <image>\r\n                                    <Image url=\"@../../../../Resouces/Pictures/speech_bubble.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                              <Label fx:id=\"labelAIChat\" styleClass=\"label-chat\" stylesheets=\"@style.css\" text=\"prepare to die\">\r\n                                 <StackPane.margin>\r\n                                    <Insets top=\"10.0\" />\r\n                                 </StackPane.margin>\r\n                              </Label>\r\n                           </children>\r\n                        </StackPane>\r\n                     </children>\r\n                  </VBox>\r\n               </children>\r\n               <BorderPane.margin>\r\n                  <Insets />\r\n               </BorderPane.margin>\r\n            </HBox>\r\n         </center>\r\n         <top>\r\n            <VBox prefHeight=\"80.0\" prefWidth=\"600.0\" BorderPane.alignment=\"TOP_CENTER\">\r\n               <children>\r\n                  <HBox prefHeight=\"35.0\" prefWidth=\"700.0\">\r\n                     <children>\r\n                        <Label alignment=\"CENTER\" contentDisplay=\"CENTER\" text=\"Score: \" textAlignment=\"CENTER\">\r\n                           <HBox.margin>\r\n                              <Insets left=\"320.0\" top=\"10.0\" />\r\n                           </HBox.margin>\r\n                        </Label>\r\n                        <Label fx:id=\"labelScore\" text=\"0 - 0\">\r\n                           <HBox.margin>\r\n                              <Insets top=\"10.0\" />\r\n                           </HBox.margin>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <Line endX=\"600.0\" startX=\"-100.0\" />\r\n               </children>\r\n            </VBox>\r\n         </top>\r\n      </BorderPane>\r\n   </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/view/GameView.fxml b/src/rps/gui/view/GameView.fxml
+--- a/src/rps/gui/view/GameView.fxml	(revision a69c79ccbd71b1a9a643a7638eea20a762f92e41)
++++ b/src/rps/gui/view/GameView.fxml	(date 1677749039103)
+@@ -10,6 +10,7 @@
+ <?import javafx.scene.layout.StackPane?>
+ <?import javafx.scene.layout.VBox?>
+ <?import javafx.scene.shape.Line?>
++<?import javafx.scene.text.Font?>
+ 
+ <AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
+    <children>
+@@ -112,23 +113,31 @@
+             </HBox>
+          </center>
+          <top>
+-            <VBox prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="TOP_CENTER">
++            <VBox prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER_LEFT">
+                <children>
+                   <HBox prefHeight="35.0" prefWidth="700.0">
+                      <children>
+-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Score: " textAlignment="CENTER">
+-                           <HBox.margin>
+-                              <Insets left="320.0" top="10.0" />
+-                           </HBox.margin>
+-                        </Label>
+-                        <Label fx:id="labelScore" text="0 - 0">
++                        <Label fx:id="labelScore" alignment="CENTER" prefWidth="700.0" style="-fx-font-size: 24;" styleClass="label-chat" stylesheets="@style.css" text="0 - 0" textAlignment="CENTER">
+                            <HBox.margin>
+                               <Insets top="10.0" />
+                            </HBox.margin>
++                           <font>
++                              <Font size="24.0" />
++                           </font>
+                         </Label>
+                      </children>
+                   </HBox>
+                   <Line endX="600.0" startX="-100.0" />
++                  <Label fx:id="labelWinnerMove" alignment="CENTER" contentDisplay="CENTER" prefWidth="700.0" style="-fx-font-size: 16;" styleClass="label-chat" stylesheets="@style.css" textAlignment="CENTER">
++                     <VBox.margin>
++                        <Insets top="5.0" />
++                     </VBox.margin>
++                  </Label>
++                  <Label fx:id="labelWinnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="55.0" prefHeight="28.0" prefWidth="700.0" style="-fx-font-size: 24;" styleClass="label-chat" stylesheets="@style.css" textAlignment="CENTER">
++                     <VBox.margin>
++                        <Insets />
++                     </VBox.margin>
++                  </Label>
+                </children>
+             </VBox>
+          </top>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/Resouces/Pictures/background.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/paper.png\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Resouces/Pictures/paper.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/qGreen.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/qOrange.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/qPurple.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/qYellow.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/rock.png\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Resouces/Pictures/rock.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Resouces/Pictures/scissors.png\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Resouces/Pictures/scissors.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/view/style.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/view/style.css\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"CSS File\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2MKXtO1TZpPKiZ4KTlfio7SMQZW\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"foldersAlwaysOnTop\" value=\"false\" />\r\n    <option name=\"showExcludedFiles\" value=\"false\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"last_opened_file_path\": \"C:/Users/julia/IdeaProjects/Rock-Paper-Scissor-Project\",\r\n    \"list.type.of.created.stylesheet\": \"CSS\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Project\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\" selected=\"Application.JavaFXApp\">\r\n    <configuration name=\"JavaFXApp\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"rps.gui.JavaFXApp\" />\r\n      <module name=\"Rock-Paper-Scissor-Project\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"rps.gui.model.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"rps.Main\" />\r\n      <module name=\"Rock-Paper-Scissor-Project\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"rps.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.JavaFXApp\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb\" name=\"Changes\" comment=\"\" />\r\n      <created>1677517463332</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1677517463332</updated>\r\n      <workItem from=\"1677571939152\" duration=\"11696000\" />\r\n      <workItem from=\"1677590221264\" duration=\"367000\" />\r\n      <workItem from=\"1677661542959\" duration=\"5751000\" />\r\n      <workItem from=\"1677668332664\" duration=\"615000\" />\r\n      <workItem from=\"1677694730852\" duration=\"10813000\" />\r\n      <workItem from=\"1677716278741\" duration=\"1852000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a69c79ccbd71b1a9a643a7638eea20a762f92e41)
++++ b/.idea/workspace.xml	(date 1677746908203)
+@@ -5,16 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/background.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/paper.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/paper.png" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qGreen.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qOrange.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qPurple.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qYellow.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/rock.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/rock.png" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/scissors.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/scissors.png" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/rps/gui/view/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/style.css" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -45,25 +39,25 @@
+     <option name="showExcludedFiles" value="false" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/Users/julia/IdeaProjects/Rock-Paper-Scissor-Project",
+-    "list.type.of.created.stylesheet": "CSS",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.0",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/julia/IdeaProjects/Rock-Paper-Scissor-Project&quot;,
++    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RunManager" selected="Application.JavaFXApp">
+     <configuration name="JavaFXApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="rps.gui.JavaFXApp" />

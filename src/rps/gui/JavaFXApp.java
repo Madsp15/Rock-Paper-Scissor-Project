@@ -30,17 +30,8 @@ public class JavaFXApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        String playerName = "Player1";
-        IPlayer bot = new Player(getRandomBotName(), PlayerType.AI);
-        IPlayer human = new Player(playerName, PlayerType.Human);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/rps/gui/view/GameView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/rps/gui/view/CharacterSelection.fxml"));
         Parent root = loader.load();
-
-        GameViewModel model = new GameViewModel(human, bot);
-        GameViewController controller = loader.getController();
-        controller.botSetup(bot.getPlayerName());
-        controller.setGameViewModel(model);
 
         stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
         stage.setScene(new Scene(root));

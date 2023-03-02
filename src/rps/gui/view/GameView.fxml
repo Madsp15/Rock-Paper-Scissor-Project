@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
    <children>
@@ -112,23 +113,31 @@
             </HBox>
          </center>
          <top>
-            <VBox prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="TOP_CENTER">
+            <VBox prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER_LEFT">
                <children>
                   <HBox prefHeight="35.0" prefWidth="700.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Score: " textAlignment="CENTER">
-                           <HBox.margin>
-                              <Insets left="320.0" top="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="labelScore" text="0 - 0">
+                        <Label fx:id="labelScore" alignment="CENTER" prefWidth="700.0" style="-fx-font-size: 24;" styleClass="label-chat" stylesheets="@style.css" text="0 - 0" textAlignment="CENTER">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
                         </Label>
                      </children>
                   </HBox>
                   <Line endX="600.0" startX="-100.0" />
+                  <Label fx:id="labelWinnerMove" alignment="CENTER" contentDisplay="CENTER" prefWidth="700.0" style="-fx-font-size: 16;" styleClass="label-chat" stylesheets="@style.css" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="labelWinnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="55.0" prefHeight="28.0" prefWidth="700.0" style="-fx-font-size: 24;" styleClass="label-chat" stylesheets="@style.css" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
          </top>
