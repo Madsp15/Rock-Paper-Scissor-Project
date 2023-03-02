@@ -5,12 +5,21 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import rps.bll.game.Move;
 import rps.bll.game.Result;
@@ -18,6 +27,7 @@ import rps.bll.game.ResultType;
 import rps.bll.player.PlayerType;
 import rps.gui.model.GameViewModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -35,7 +45,9 @@ public class GameViewController implements Initializable {
     @FXML
     private MFXTextField textFieldAI;
     @FXML
-    private ImageView imageRockButton, imagePaperButton, imageScissorButton;
+    private ImageView imageRockButton, imagePaperButton, imageScissorButton,
+            playerHealth1, playerHealth2, playerHealth3, playerHealth4, playerHealth5,
+            aiHealth1, aiHealth2, aiHealth3, aiHealth4, aiHealth5;
     private final Image chatBox = new Image("Pictures/speech_bubble.png");
     private final Image versus = new Image("Pictures/versus.png");
     private final Image rock = new Image("Pictures/rock.png");
@@ -48,12 +60,19 @@ public class GameViewController implements Initializable {
     private final Image HALL9000 = new Image("Pictures/HALL 9000.png");
     private final Image DALEK = new Image("Pictures/Dalek.png");
     private final Image TwoB = new Image("Pictures/YoRHa No.2 Type B.png");
+    private final Image health1 = new Image("Pictures/heartred.png");
+    private final Image health2 = new Image("Pictures/heartgreen.png");
+    private final Image health3 = new Image("Pictures/heartyellow.png");
+    private final Image health4 = new Image("Pictures/heartpurple.png");
+    private final Image health5 = new Image("Pictures/heartblue.png");
+    private final Image health0 = new Image("Pictures/heartgrey.png");
     private List<Image> questionMarks = new ArrayList<>();
     private GameViewModel gameViewModel;
     private Timeline timeline;
     private int currentIndex = 0;
     private int cycleCount = 0;
     String botName ="";
+    public static boolean isHealthOn = false;
 
 
     /**
@@ -72,7 +91,21 @@ public class GameViewController implements Initializable {
         questionMarks.add(rock);
         questionMarks.add(paper);
         questionMarks.add(scissors);
+
+
+        if(isHealthOn == true)
+        {
+            setHeartImages();
+        }
     }
+    public boolean isHealthModeOn(int value)
+    {
+        if(value == 1)
+            return isHealthOn = true;
+        else
+            return isHealthOn = false;
+    }
+
 
     public void setGameViewModel(GameViewModel model){
         this.gameViewModel = model;
@@ -160,6 +193,8 @@ public class GameViewController implements Initializable {
         result = results.get(results.size()-1);
         int humanScore = 0;
         int aiScore = 0;
+        loseHealth(results);
+
 
         if (result.getType().equals(ResultType.Tie)) {
             if (move.equals(Move.Rock))
@@ -189,6 +224,7 @@ public class GameViewController implements Initializable {
             displayGoodMoveMessage(result.getLoserPlayer().getPlayerName());
         }
 
+        if(isHealthOn == false){
         for (Result res: results) {
             if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
                 humanScore++;
@@ -196,7 +232,8 @@ public class GameViewController implements Initializable {
             if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
                 aiScore++;
             }
-        }
+        }}
+
         if(result.getType().equals(ResultType.Tie)){
             labelWinnerMove.setText(result.getWinnerMove() + " ties with " + result.getLoserMove());
             labelWinnerPlayer.setText("Nobody wins this round");
@@ -208,11 +245,8 @@ public class GameViewController implements Initializable {
 
         labelScore.setText(humanScore + "  -  " + aiScore);
 
-        loseHealth(results);
-
         System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
                 + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
-
     }
     public void botSetup(String botName) {
 
@@ -293,16 +327,62 @@ public class GameViewController implements Initializable {
     }
 
     public void loseHealth(ArrayList<Result> results) {
-
+        int humanScore = 0;
+        int aiScore = 0;
         for (Result r : results) {
-            int playerHealthbar = r.getPlayerHealthBar();
-            int aiHealthbar = r.getAiHealthBar();
+            if(isHealthOn == true) {
+                if (r.getPlayerHealthBar() == 4) {
+                    playerHealth1.setImage(health0);
 
-            if (aiHealthbar == 0) {
-                System.out.println("AI LOSE");
-            } else if (playerHealthbar == 0) {
-                System.out.println("You lose!");
+                } else if (r.getPlayerHealthBar() == 3) {
+                    playerHealth2.setImage(health0);
+                } else if (r.getPlayerHealthBar() == 2) {
+                    playerHealth3.setImage(health0);
+                } else if (r.getPlayerHealthBar() == 1) {
+                    playerHealth4.setImage(health0);
+                }
+                else if(r.getPlayerHealthBar() == 0)
+                {
+                    playerHealth5.setImage(health0);
+                    aiScore++;
+                    setHeartImages();
+                    System.out.println("Player lose");
+                }
+
+                if (r.getAiHealthBar() == 4) {
+                    aiHealth5.setImage(health0);
+                } else if (r.getAiHealthBar() == 3) {
+                    aiHealth4.setImage(health0);
+                } else if (r.getAiHealthBar() == 2) {
+                    aiHealth3.setImage(health0);
+                } else if (r.getAiHealthBar() == 1) {
+                    aiHealth2.setImage(health0);
+                }
+                else if(r.getAiHealthBar() == 0)
+                {
+                    aiHealth1.setImage(health0);
+                    humanScore++;
+                    setHeartImages();
+                }
+                }
             }
+        labelScore.setText(humanScore + "  -  " + aiScore);
+        }
+
+
+        public void setHeartImages()
+        {
+            playerHealth1.setImage(health1);
+            playerHealth2.setImage(health2);
+            playerHealth3.setImage(health3);
+            playerHealth4.setImage(health4);
+            playerHealth5.setImage(health5);
+
+            aiHealth1.setImage(health1);
+            aiHealth2.setImage(health2);
+            aiHealth3.setImage(health3);
+            aiHealth4.setImage(health4);
+            aiHealth5.setImage(health5);
         }
     }
-}
+

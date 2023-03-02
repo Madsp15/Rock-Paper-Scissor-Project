@@ -4,31 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/boulder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/cat.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/pain.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/zucc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rps/gui/view/CharacterSelection.fxml" afterDir="false" />
+    <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="health stuff">
+      <change afterPath="$PROJECT_DIR$/src/rps/gui/controller/WinOrLoseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rps/gui/view/WinOrLose.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_10_05__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_10_05__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_09_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_09_15__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_10_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_10_31__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/paper.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/paper.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qGreen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qOrange.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qPurple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/qYellow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/rock.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/rock.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/scissors.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/scissors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resouces/Pictures/versus.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resouces/Pictures/versus.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/bll/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/game/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/bll/game/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/game/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/bll/game/IGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/game/IGameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/bll/game/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/game/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/bll/player/IPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/player/IPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/bll/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/gui/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/ConsoleApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rps/gui/view/CharacterSelection.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/CharacterSelection.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/view/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/style.css" afterDir="false" />
     </list>
@@ -80,21 +69,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.JavaFXApp">
-    <configuration name="JavaFXApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="rps.gui.JavaFXApp" />
-      <module name="Rock-Paper-Scissor-Project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="rps.gui.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="rps.Main" />
@@ -130,6 +104,14 @@
       <workItem from="1677694730852" duration="10813000" />
       <workItem from="1677716278741" duration="1852000" />
     </task>
+    <task id="LOCAL-00001" summary="health stuff">
+      <created>1677772874964</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677772874964</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,5 +130,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="health stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="health stuff" />
   </component>
 </project>

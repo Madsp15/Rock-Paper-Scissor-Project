@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
    <children>
       <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -117,6 +117,11 @@
                <children>
                   <HBox prefHeight="35.0" prefWidth="700.0">
                      <children>
+                        <ImageView fx:id="playerHealth5" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="playerHealth4" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="playerHealth3" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="playerHealth2" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="playerHealth1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="labelScore" alignment="CENTER" prefWidth="700.0" style="-fx-font-size: 24;" styleClass="label-chat" stylesheets="@style.css" text="0 - 0" textAlignment="CENTER">
                            <HBox.margin>
                               <Insets top="10.0" />
@@ -125,6 +130,11 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <ImageView fx:id="aiHealth5" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="aiHealth4" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="aiHealth3" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="aiHealth2" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="aiHealth1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
                   <Line endX="600.0" startX="-100.0" />

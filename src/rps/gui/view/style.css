@@ -27,3 +27,15 @@
     -fx-scale-y: 1.2;
     -fx-scale-z: 1.2;
 }
+
+.background {
+   -fx-background-color: #F7D6BD;
+}
+
+.mfx-button{
+   -fx-background-color: #FAC59B;
+}
+
+.mfx-button:hover{
+   -fx-background-color: #F5B17B;
+}

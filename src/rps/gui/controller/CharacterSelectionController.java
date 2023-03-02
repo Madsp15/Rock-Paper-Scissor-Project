@@ -1,5 +1,6 @@
 package rps.gui.controller;
 
+import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,11 +26,15 @@ import java.util.ResourceBundle;
 
 public class CharacterSelectionController implements Initializable {
 
+    GameViewController game = new GameViewController();
+    @FXML
+    private CheckBox checkBoxWithHealth, checkBoxWithoutHealth;
+
     @FXML
     private Label labelSelectedZucc, labelSelectedPain, labelSelectedBoulder, labelSelectedCat,
             labelSelectedWallE, labelSelectedDalek, labelSelectedTypeB, labelSelectedHall;
     @FXML
-    private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek;
+    private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek, withHealth, withoutHealth;
 
     private String humanName = "";
     private String aiName = "";
@@ -137,6 +143,8 @@ public class CharacterSelectionController implements Initializable {
         Image boulder = new Image("Pictures/boulder.png");
         Image pain = new Image("Pictures/pain.png");
         Image cat = new Image("Pictures/cat.png");
+        Image imageWithHealth = new Image("Pictures/heartred.png");
+        Image imageWithoutHealth = new Image("Pictures/heartgrey.png");
         imageZucc.setImage(zucc);
         imageCat.setImage(cat);
         imageBoulder.setImage(boulder);
@@ -145,7 +153,27 @@ public class CharacterSelectionController implements Initializable {
         imageHall.setImage(hall);
         imageTypeB.setImage(typeB);
         imageWallE.setImage(wallE);
+        withHealth.setImage(imageWithHealth);
+        withoutHealth.setImage(imageWithoutHealth);
+    }
 
+    public void clickWithHealth(MouseEvent mouseEvent) {
+
+        withoutHealth.setScaleX(1);
+        withoutHealth.setScaleY(1);
+        withHealth.setScaleX(1.2);
+        withHealth.setScaleY(1.2);
+        game.isHealthModeOn(1);
+
+    }
+
+    public void clickWithoutHealth(MouseEvent mouseEvent) {
+
+        withHealth.setScaleX(1);
+        withHealth.setScaleY(1);
+        withoutHealth.setScaleX(1.2);
+        withoutHealth.setScaleY(1.2);
+        game.isHealthModeOn(0);
 
     }
 }

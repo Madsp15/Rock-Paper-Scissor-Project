@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.CharacterSelectionController">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.CharacterSelectionController">
    <children>
       <VBox layoutX="30.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -248,11 +248,15 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <ImageView fx:id="withoutHealth" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#clickWithoutHealth" pickOnBounds="true" preserveRatio="true" styleClass="image-view-hover" translateX="-150.0" />
+                  <Label text="without health" translateX="-145.0" />
                   <MFXButton onAction="#clickPlay" text="Play!">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </MFXButton>
+                  <Label text="with health" translateX="190.0" />
+                  <ImageView fx:id="withHealth" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#clickWithHealth" pickOnBounds="true" preserveRatio="true" styleClass="image-view-hover" translateX="85.0" />
                </children>
             </HBox>
          </children>

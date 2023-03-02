@@ -47,13 +47,13 @@ public class GameManager {
         else if ((human_move == Move.Rock && bot_move == Move.Scissor) ||
                 (human_move == Move.Scissor && bot_move == Move.Paper) ||
                 (human_move == Move.Paper && bot_move == Move.Rock)) {
-            result = new Result(human, human_move, bot, bot_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
             gameState.setAiHealth(--aiHealthbar);
-            System.out.println(aiHealthbar);
+            System.out.println("AI "+aiHealthbar);
+            result = new Result(human, human_move, bot, bot_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
         } else {
-            result = new Result(bot, bot_move, human, human_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
             gameState.setPlayerHealth(--playerHealthBar);
-            System.out.println(playerHealthBar);
+            result = new Result(bot, bot_move, human, human_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
+            System.out.println("Player "+playerHealthBar);
         }
 
         gameState.setRoundNumber(++roundNumber);
