@@ -45,11 +45,7 @@ public class GameViewController implements Initializable {
     private final Image paper = new Image("Pictures/paper.png");
     private final Image scissors = new Image("Pictures/scissors.png");
     private final Image questionR = new Image("Pictures/qRed.png");
-    private final Image questionO = new Image("Pictures/qOrange.png");
-    private final Image questionY = new Image("Pictures/qYellow.png");
-    private final Image questionG = new Image("Pictures/qGreen.png");
     private final Image questionB = new Image("Pictures/qBlue.png");
-    private final Image questionP = new Image("Pictures/qPurple.png");
     private List<Image> questionMarks = new ArrayList<>();
     private GameViewModel gameViewModel;
     private Timeline timeline;
@@ -70,14 +66,9 @@ public class GameViewController implements Initializable {
         imageActiveRPCPlayer.setImage(questionR);
         imageActiveRPCAI.setImage(questionB);
         questionMarks.clear();
-        questionMarks.add(questionR);
-        questionMarks.add(questionO);
-        questionMarks.add(questionY);
-        questionMarks.add(questionG);
-        questionMarks.add(questionB);
-        questionMarks.add(questionP);
-
-
+        questionMarks.add(rock);
+        questionMarks.add(paper);
+        questionMarks.add(scissors);
     }
 
     public void setGameViewModel(GameViewModel model){

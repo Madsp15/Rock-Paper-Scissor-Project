@@ -60,7 +60,7 @@
                         </ImageView>
                      </children>
                   </VBox>
-                  <ImageView fx:id="imageActiveRPCPlayer" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
+                  <ImageView fx:id="imageActiveRPCPlayer" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-fixed">
                      <HBox.margin>
                         <Insets top="50.0" />
                      </HBox.margin>
@@ -70,7 +70,7 @@
                         <Insets top="84.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="imageActiveRPCAI" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
+                  <ImageView fx:id="imageActiveRPCAI" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-fixed">
                      <HBox.margin>
                         <Insets top="50.0" />
                      </HBox.margin>
