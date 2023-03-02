@@ -1,6 +1,5 @@
 package rps.gui.controller;
 
-import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,7 +32,17 @@ public class CharacterSelectionController implements Initializable {
     private Label labelSelectedZucc, labelSelectedPain, labelSelectedBoulder, labelSelectedCat,
             labelSelectedWallE, labelSelectedDalek, labelSelectedTypeB, labelSelectedHall;
     @FXML
-    private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek, withHealth, withoutHealth;
+    private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek;
+    private Image dalek = new Image("Pictures/Dalek.png");
+    private Image hall = new Image("Pictures/HALL 9000.png");
+    private Image typeB = new Image("Pictures/YoRHa No.2 Type B.png");
+    private Image wallE = new Image("Pictures/WALL-E.png");
+    private Image zucc = new Image("Pictures/zucc.png");
+    private Image boulder = new Image("Pictures/boulder.png");
+    private Image pain = new Image("Pictures/pain.png");
+    private Image cat = new Image("Pictures/cat.png");
+    private Image imageWithHealth = new Image("Pictures/heartred.png");
+    private Image imageWithoutHealth = new Image("Pictures/heartgrey.png");
 
     private String humanName = "";
     private String aiName = "";
@@ -66,7 +74,8 @@ public class CharacterSelectionController implements Initializable {
 
     public void clickWallE(MouseEvent mouseEvent) {
         clearSelectedAI();
-        aiName = "Wall-E";
+        aiImage = wallE;
+        aiName = "WALL-E";
         labelSelectedWallE.setText("Selected");
     }
 
@@ -103,11 +112,13 @@ public class CharacterSelectionController implements Initializable {
             Stage stage = new Stage();
 
             GameViewModel model = new GameViewModel(human, bot);
+            model.setImages(humanImage, aiImage);
             GameViewController controller = loader.getController();
-            controller.botSetup(bot.getPlayerName());
+            controller.botSetup(humanName, aiName);
             controller.setGameViewModel(model);
+            controller.setAIHumanImage();
 
-            stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
+            stage.setTitle("RPS: Choose Wisely");
             stage.setScene(new Scene(root));
 
             stage.show();
@@ -135,16 +146,6 @@ public class CharacterSelectionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Image dalek = new Image("Pictures/Dalek.png");
-        Image hall = new Image("Pictures/HALL 9000.png");
-        Image typeB = new Image("Pictures/YoRHa No.2 Type B.png");
-        Image wallE = new Image("Pictures/WALL-E.png");
-        Image zucc = new Image("Pictures/zucc.png");
-        Image boulder = new Image("Pictures/boulder.png");
-        Image pain = new Image("Pictures/pain.png");
-        Image cat = new Image("Pictures/cat.png");
-        Image imageWithHealth = new Image("Pictures/heartred.png");
-        Image imageWithoutHealth = new Image("Pictures/heartgrey.png");
         imageZucc.setImage(zucc);
         imageCat.setImage(cat);
         imageBoulder.setImage(boulder);
@@ -153,27 +154,7 @@ public class CharacterSelectionController implements Initializable {
         imageHall.setImage(hall);
         imageTypeB.setImage(typeB);
         imageWallE.setImage(wallE);
-        withHealth.setImage(imageWithHealth);
-        withoutHealth.setImage(imageWithoutHealth);
-    }
 
-    public void clickWithHealth(MouseEvent mouseEvent) {
-
-        withoutHealth.setScaleX(1);
-        withoutHealth.setScaleY(1);
-        withHealth.setScaleX(1.2);
-        withHealth.setScaleY(1.2);
-        game.isHealthModeOn(1);
-
-    }
-
-    public void clickWithoutHealth(MouseEvent mouseEvent) {
-
-        withHealth.setScaleX(1);
-        withHealth.setScaleY(1);
-        withoutHealth.setScaleX(1.2);
-        withoutHealth.setScaleY(1.2);
-        game.isHealthModeOn(0);
 
     }
 }

@@ -33,7 +33,7 @@ public class JavaFXApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/rps/gui/view/CharacterSelection.fxml"));
         Parent root = loader.load();
 
-        stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
+        stage.setTitle("RPS: Choose Wisely");
         stage.setScene(new Scene(root));
 
         stage.show();

@@ -60,6 +60,7 @@ public class GameViewController implements Initializable {
     private final Image HALL9000 = new Image("Pictures/HALL 9000.png");
     private final Image DALEK = new Image("Pictures/Dalek.png");
     private final Image TwoB = new Image("Pictures/YoRHa No.2 Type B.png");
+    private final List<Image> questionMarks = new ArrayList<>();
     private final Image health1 = new Image("Pictures/heartred.png");
     private final Image health2 = new Image("Pictures/heartgreen.png");
     private final Image health3 = new Image("Pictures/heartyellow.png");
@@ -71,6 +72,9 @@ public class GameViewController implements Initializable {
     private Timeline timeline;
     private int currentIndex = 0;
     private int cycleCount = 0;
+    private Image humanImage;
+    private Image aiImage;
+    private boolean isCycling = false;
     String botName ="";
     public static boolean isHealthOn = false;
 
@@ -112,50 +116,55 @@ public class GameViewController implements Initializable {
     }
 
     public void clickRock(MouseEvent mouseEvent) {
-        timeline = new Timeline();
-        imageActiveRPCPlayer.setImage(rock);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
-            currentIndex = (currentIndex + 1) % questionMarks.size();
-            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
-            if(currentIndex == 0)
-                cycleCount++;
-            if(cycleCount == 3){
-                timeline.stop();
-                imageActiveRPCAI.setImage(rock);
-                playRound(Move.Rock);
-                cycleCount = 0;
-            }
+        if(!isCycling) {
+            timeline = new Timeline();
+            imageActiveRPCPlayer.setImage(rock);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
+                currentIndex = (currentIndex + 1) % questionMarks.size();
+                imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
+                if (currentIndex == 0)
+                    cycleCount++;
+                if (cycleCount == 3) {
+                    timeline.stop();
+                    imageActiveRPCAI.setImage(rock);
+                    playRound(Move.Rock);
+                    cycleCount = 0;
+                    isCycling = false;
+                }
 
-        });
+            });
 
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(20);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.setCycleCount(20);
 
-        timeline.play();
+            timeline.play();
+        }
 
     }
 
     public void clickPaper(MouseEvent mouseEvent) {
-        timeline = new Timeline();
-        imageActiveRPCPlayer.setImage(paper);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
-            currentIndex = (currentIndex + 1) % questionMarks.size();
-            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
-            if(currentIndex == 0)
-                cycleCount++;
-            if(cycleCount == 3){
-                timeline.stop();
-                imageActiveRPCAI.setImage(paper);
-                playRound(Move.Paper);
-                cycleCount = 0;
-            }
+        if(!isCycling) {
+            timeline = new Timeline();
+            imageActiveRPCPlayer.setImage(paper);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
+                currentIndex = (currentIndex + 1) % questionMarks.size();
+                imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
+                if (currentIndex == 0)
+                    cycleCount++;
+                if (cycleCount == 3) {
+                    timeline.stop();
+                    imageActiveRPCAI.setImage(paper);
+                    playRound(Move.Paper);
+                    cycleCount = 0;
+                }
 
-        });
+            });
 
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(20);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.setCycleCount(20);
 
-        timeline.play();
+            timeline.play();
+        }
 
     }
 
@@ -248,22 +257,9 @@ public class GameViewController implements Initializable {
         System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
                 + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
     }
-    public void botSetup(String botName) {
-
+    public void botSetup(String humanName, String botName) {
+        labelHumanName.setText(humanName);
         labelAIName.setText(botName);
-
-        if (botName.equals("WALL-E")) {
-            imageAIPlayer.setImage(WallE);
-        }
-        if (botName.equals("Dalek")) {
-            imageAIPlayer.setImage(DALEK);
-        }
-        if (botName.equals("YoRHa No.2 Type B")) {
-            imageAIPlayer.setImage(TwoB);
-        }
-        if (botName.equals("HALL 9000")) {
-            imageAIPlayer.setImage(HALL9000);
-        }
         displayStartOfGameMessage(botName);
     }
     private void displayStartOfGameMessage(String botName) {
@@ -326,6 +322,14 @@ public class GameViewController implements Initializable {
 
     }
 
+    public void setAIHumanImage(){
+        this.humanImage = gameViewModel.getHumanImage();
+        this.aiImage = gameViewModel.getAiImage();
+        imageHumanPlayer.setImage(humanImage);
+        imageAIPlayer.setImage(aiImage);
+    }
+
+}
     public void loseHealth(ArrayList<Result> results) {
         int humanScore = 0;
         int aiScore = 0;

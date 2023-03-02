@@ -1,0 +1,372 @@
+Index: src/rps/gui/JavaFXApp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package rps.gui;\r\n\r\n// Java imports\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\nimport rps.bll.game.GameManager;\r\nimport rps.bll.player.IPlayer;\r\nimport rps.bll.player.Player;\r\nimport rps.bll.player.PlayerType;\r\nimport rps.bll.game.*;\r\nimport rps.bll.player.*;\r\nimport rps.gui.controller.GameViewController;\r\nimport rps.gui.model.GameViewModel;\r\n\r\nimport java.util.Random;\r\n\r\n/**\r\n * JavaFX implementation of the RPS game\r\n *\r\n * @author smsj\r\n */\r\npublic class JavaFXApp extends Application {\r\n\r\n    public static void launch() {\r\n        Application.launch();\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n        FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/rps/gui/view/CharacterSelection.fxml\"));\r\n        Parent root = loader.load();\r\n\r\n        stage.setTitle(\"Welcome to the not-implemented Rock-Paper-Scissor game!\");\r\n        stage.setScene(new Scene(root));\r\n\r\n        stage.show();\r\n\r\n    }\r\n    private String getRandomBotName() {\r\n        String[] botNames = new String[] {\r\n                \"WALL-E\",\r\n                \"Dalek\",\r\n                \"YoRHa No.2 Type B\",\r\n                \"HALL 9000\"\r\n        };\r\n        int randomNumber = new Random().nextInt(botNames.length - 1);\r\n        return botNames[randomNumber];\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/JavaFXApp.java b/src/rps/gui/JavaFXApp.java
+--- a/src/rps/gui/JavaFXApp.java	(revision a27a95e1eca7d75ff2f3758db5599c0facaac400)
++++ b/src/rps/gui/JavaFXApp.java	(date 1677777576686)
+@@ -33,7 +33,7 @@
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/rps/gui/view/CharacterSelection.fxml"));
+         Parent root = loader.load();
+ 
+-        stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
++        stage.setTitle("RPS: Choose Wisely");
+         stage.setScene(new Scene(root));
+ 
+         stage.show();
+Index: src/rps/gui/controller/CharacterSelectionController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package rps.gui.controller;\r\n\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Alert;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.stage.Stage;\r\nimport rps.bll.player.IPlayer;\r\nimport rps.bll.player.Player;\r\nimport rps.bll.player.PlayerType;\r\nimport rps.gui.model.GameViewModel;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class CharacterSelectionController implements Initializable {\r\n\r\n    @FXML\r\n    private Label labelSelectedZucc, labelSelectedPain, labelSelectedBoulder, labelSelectedCat,\r\n            labelSelectedWallE, labelSelectedDalek, labelSelectedTypeB, labelSelectedHall;\r\n    @FXML\r\n    private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek;\r\n\r\n    private String humanName = \"\";\r\n    private String aiName = \"\";\r\n\r\n\r\n    public void clickZucc(MouseEvent mouseEvent) {\r\n        clearSelectedHuman();\r\n        humanName = \"The Zucc\";\r\n        labelSelectedZucc.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickPain(MouseEvent mouseEvent) {\r\n        clearSelectedHuman();\r\n        humanName = \"Harrold of Pain\";\r\n        labelSelectedPain.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickBoulder(MouseEvent mouseEvent) {\r\n        clearSelectedHuman();\r\n        humanName = \"The Boulder\";\r\n        labelSelectedBoulder.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickCat(MouseEvent mouseEvent) {\r\n        clearSelectedHuman();\r\n        humanName = \"Weird Cat\";\r\n        labelSelectedCat.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickWallE(MouseEvent mouseEvent) {\r\n        clearSelectedAI();\r\n        aiName = \"Wall-E\";\r\n        labelSelectedWallE.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickDalek(MouseEvent mouseEvent) {\r\n        clearSelectedAI();\r\n        aiName = \"Dalek\";\r\n        labelSelectedDalek.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickTypeB(MouseEvent mouseEvent) {\r\n        clearSelectedAI();\r\n        aiName = \"YoRHa No.2 Type B\";\r\n        labelSelectedTypeB.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickHall(MouseEvent mouseEvent) {\r\n        clearSelectedAI();\r\n        aiName = \"HALL 9000\";\r\n        labelSelectedHall.setText(\"Selected\");\r\n    }\r\n\r\n    public void clickPlay(ActionEvent actionEvent) {\r\n        if(!humanName.equals(\"\") && !aiName.equals(\"\")){\r\n            IPlayer bot = new Player(aiName, PlayerType.AI);\r\n            IPlayer human = new Player(humanName, PlayerType.Human);\r\n\r\n            FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/rps/gui/view/GameView.fxml\"));\r\n            Parent root = null;\r\n            try {\r\n                root = loader.load();\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n            Stage stage = new Stage();\r\n\r\n            GameViewModel model = new GameViewModel(human, bot);\r\n            GameViewController controller = loader.getController();\r\n            controller.botSetup(bot.getPlayerName());\r\n            controller.setGameViewModel(model);\r\n\r\n            stage.setTitle(\"Welcome to the not-implemented Rock-Paper-Scissor game!\");\r\n            stage.setScene(new Scene(root));\r\n\r\n            stage.show();\r\n\r\n            Node n = (Node) actionEvent.getSource();\r\n            Stage stage2 = (Stage) n.getScene().getWindow();\r\n            stage2.close();\r\n\r\n        }\r\n    }\r\n\r\n    public void clearSelectedHuman(){\r\n        labelSelectedZucc.setText(\"\");\r\n        labelSelectedBoulder.setText(\"\");\r\n        labelSelectedCat.setText(\"\");\r\n        labelSelectedPain.setText(\"\");\r\n    }\r\n\r\n    public void clearSelectedAI(){\r\n        labelSelectedDalek.setText(\"\");\r\n        labelSelectedHall.setText(\"\");\r\n        labelSelectedWallE.setText(\"\");\r\n        labelSelectedTypeB.setText(\"\");\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        Image dalek = new Image(\"Pictures/Dalek.png\");\r\n        Image hall = new Image(\"Pictures/HALL 9000.png\");\r\n        Image typeB = new Image(\"Pictures/YoRHa No.2 Type B.png\");\r\n        Image wallE = new Image(\"Pictures/WALL-E.png\");\r\n        Image zucc = new Image(\"Pictures/zucc.png\");\r\n        Image boulder = new Image(\"Pictures/boulder.png\");\r\n        Image pain = new Image(\"Pictures/pain.png\");\r\n        Image cat = new Image(\"Pictures/cat.png\");\r\n        imageZucc.setImage(zucc);\r\n        imageCat.setImage(cat);\r\n        imageBoulder.setImage(boulder);\r\n        imagePain.setImage(pain);\r\n        imageDalek.setImage(dalek);\r\n        imageHall.setImage(hall);\r\n        imageTypeB.setImage(typeB);\r\n        imageWallE.setImage(wallE);\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/controller/CharacterSelectionController.java b/src/rps/gui/controller/CharacterSelectionController.java
+--- a/src/rps/gui/controller/CharacterSelectionController.java	(revision a27a95e1eca7d75ff2f3758db5599c0facaac400)
++++ b/src/rps/gui/controller/CharacterSelectionController.java	(date 1677777498995)
+@@ -29,55 +29,73 @@
+             labelSelectedWallE, labelSelectedDalek, labelSelectedTypeB, labelSelectedHall;
+     @FXML
+     private ImageView imageZucc, imagePain, imageCat, imageBoulder, imageWallE, imageHall, imageTypeB, imageDalek;
++    private Image dalek = new Image("Pictures/Dalek.png");
++    private Image hall = new Image("Pictures/HALL 9000.png");
++    private Image typeB = new Image("Pictures/YoRHa No.2 Type B.png");
++    private Image wallE = new Image("Pictures/WALL-E.png");
++    private Image zucc = new Image("Pictures/zucc.png");
++    private Image boulder = new Image("Pictures/boulder.png");
++    private Image pain = new Image("Pictures/pain.png");
++    private Image cat = new Image("Pictures/cat.png");
+ 
+     private String humanName = "";
+     private String aiName = "";
++    private Image humanImage;
++    private Image aiImage;
+ 
+ 
+     public void clickZucc(MouseEvent mouseEvent) {
+         clearSelectedHuman();
++        humanImage = zucc;
+         humanName = "The Zucc";
+         labelSelectedZucc.setText("Selected");
+     }
+ 
+     public void clickPain(MouseEvent mouseEvent) {
+         clearSelectedHuman();
++        humanImage = pain;
+         humanName = "Harrold of Pain";
+         labelSelectedPain.setText("Selected");
+     }
+ 
+     public void clickBoulder(MouseEvent mouseEvent) {
+         clearSelectedHuman();
++        humanImage = boulder;
+         humanName = "The Boulder";
+         labelSelectedBoulder.setText("Selected");
+     }
+ 
+     public void clickCat(MouseEvent mouseEvent) {
+         clearSelectedHuman();
++        humanImage = cat;
+         humanName = "Weird Cat";
+         labelSelectedCat.setText("Selected");
+     }
+ 
+     public void clickWallE(MouseEvent mouseEvent) {
+         clearSelectedAI();
+-        aiName = "Wall-E";
++        aiImage = wallE;
++        aiName = "WALL-E";
+         labelSelectedWallE.setText("Selected");
+     }
+ 
+     public void clickDalek(MouseEvent mouseEvent) {
+         clearSelectedAI();
++        aiImage = dalek;
+         aiName = "Dalek";
+         labelSelectedDalek.setText("Selected");
+     }
+ 
+     public void clickTypeB(MouseEvent mouseEvent) {
+         clearSelectedAI();
++        aiImage = typeB;
+         aiName = "YoRHa No.2 Type B";
+         labelSelectedTypeB.setText("Selected");
+     }
+ 
+     public void clickHall(MouseEvent mouseEvent) {
+         clearSelectedAI();
++        aiImage = hall;
+         aiName = "HALL 9000";
+         labelSelectedHall.setText("Selected");
+     }
+@@ -97,11 +115,13 @@
+             Stage stage = new Stage();
+ 
+             GameViewModel model = new GameViewModel(human, bot);
++            model.setImages(humanImage, aiImage);
+             GameViewController controller = loader.getController();
+-            controller.botSetup(bot.getPlayerName());
++            controller.botSetup(humanName, aiName);
+             controller.setGameViewModel(model);
++            controller.setAIHumanImage();
+ 
+-            stage.setTitle("Welcome to the not-implemented Rock-Paper-Scissor game!");
++            stage.setTitle("RPS: Choose Wisely");
+             stage.setScene(new Scene(root));
+ 
+             stage.show();
+@@ -129,14 +149,6 @@
+ 
+     @Override
+     public void initialize(URL location, ResourceBundle resources) {
+-        Image dalek = new Image("Pictures/Dalek.png");
+-        Image hall = new Image("Pictures/HALL 9000.png");
+-        Image typeB = new Image("Pictures/YoRHa No.2 Type B.png");
+-        Image wallE = new Image("Pictures/WALL-E.png");
+-        Image zucc = new Image("Pictures/zucc.png");
+-        Image boulder = new Image("Pictures/boulder.png");
+-        Image pain = new Image("Pictures/pain.png");
+-        Image cat = new Image("Pictures/cat.png");
+         imageZucc.setImage(zucc);
+         imageCat.setImage(cat);
+         imageBoulder.setImage(boulder);
+Index: src/rps/gui/model/GameViewModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package rps.gui.model;\r\n\r\nimport rps.bll.game.GameManager;\r\nimport rps.bll.game.Move;\r\nimport rps.bll.game.Result;\r\nimport rps.bll.player.IPlayer;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class GameViewModel {\r\n\r\n    private GameManager gameManager;\r\n\r\n    public GameViewModel(IPlayer human, IPlayer bot){\r\n        this.gameManager = new GameManager(human, bot);\r\n    }\r\n\r\n    public void playRound(Move human_move){\r\n        gameManager.playRound(human_move);\r\n    }\r\n    public ArrayList<Result> getHistoricResults(){\r\n        return (ArrayList<Result>) gameManager.getGameState().getHistoricResults();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/model/GameViewModel.java b/src/rps/gui/model/GameViewModel.java
+--- a/src/rps/gui/model/GameViewModel.java	(revision a27a95e1eca7d75ff2f3758db5599c0facaac400)
++++ b/src/rps/gui/model/GameViewModel.java	(date 1677776770196)
+@@ -1,5 +1,6 @@
+ package rps.gui.model;
+ 
++import javafx.scene.image.Image;
+ import rps.bll.game.GameManager;
+ import rps.bll.game.Move;
+ import rps.bll.game.Result;
+@@ -11,6 +12,8 @@
+ public class GameViewModel {
+ 
+     private GameManager gameManager;
++    private Image humanImage;
++    private Image aiImage;
+ 
+     public GameViewModel(IPlayer human, IPlayer bot){
+         this.gameManager = new GameManager(human, bot);
+@@ -22,4 +25,15 @@
+     public ArrayList<Result> getHistoricResults(){
+         return (ArrayList<Result>) gameManager.getGameState().getHistoricResults();
+     }
++
++    public void setImages(Image human, Image ai){
++        this.humanImage = human;
++        this.aiImage = ai;
++    }
++    public Image getHumanImage(){
++        return humanImage;
++    }
++    public Image getAiImage(){
++        return aiImage;
++    }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/Resouces/Pictures/boulder.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Resouces/Pictures/cat.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Resouces/Pictures/pain.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Resouces/Pictures/zucc.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/rps/gui/view/CharacterSelection.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/JavaFXApp.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/JavaFXApp.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/view/GameView.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/view/GameView.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/rps/gui/view/style.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/rps/gui/view/style.css\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"CSS File\" />\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2MKXtO1TZpPKiZ4KTlfio7SMQZW\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"foldersAlwaysOnTop\" value=\"false\" />\r\n    <option name=\"showExcludedFiles\" value=\"false\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/julia/IdeaProjects/Rock-Paper-Scissor-Project&quot;,\r\n    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\" selected=\"Application.JavaFXApp\">\r\n    <configuration name=\"JavaFXApp\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"rps.gui.JavaFXApp\" />\r\n      <module name=\"Rock-Paper-Scissor-Project\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"rps.gui.model.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"rps.Main\" />\r\n      <module name=\"Rock-Paper-Scissor-Project\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"rps.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.JavaFXApp\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb\" name=\"Changes\" comment=\"\" />\r\n      <created>1677517463332</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1677517463332</updated>\r\n      <workItem from=\"1677571939152\" duration=\"11696000\" />\r\n      <workItem from=\"1677590221264\" duration=\"367000\" />\r\n      <workItem from=\"1677661542959\" duration=\"5751000\" />\r\n      <workItem from=\"1677668332664\" duration=\"615000\" />\r\n      <workItem from=\"1677694730852\" duration=\"10813000\" />\r\n      <workItem from=\"1677716278741\" duration=\"1852000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a27a95e1eca7d75ff2f3758db5599c0facaac400)
++++ b/.idea/workspace.xml	(date 1677793272209)
+@@ -5,18 +5,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/boulder.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/cat.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/pain.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Resouces/Pictures/zucc.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/rps/gui/view/CharacterSelection.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_03_2023_14_45__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_09_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_09_15__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_10_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_03_2023_10_31__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/JavaFXApp.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/GameView.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/rps/gui/view/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/view/style.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/rps/gui/model/GameViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/model/GameViewModel.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -114,6 +109,7 @@
+       <workItem from="1677668332664" duration="615000" />
+       <workItem from="1677694730852" duration="10813000" />
+       <workItem from="1677716278741" duration="1852000" />
++      <workItem from="1677792339369" duration="926000" />
+     </task>
+     <servers />
+   </component>
+Index: src/rps/gui/controller/GameViewController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package rps.gui.controller;\r\n\r\n// Java imports\r\nimport io.github.palexdev.materialfx.controls.MFXTextField;\r\nimport javafx.animation.KeyFrame;\r\nimport javafx.animation.Timeline;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.util.Duration;\r\nimport rps.bll.game.Move;\r\nimport rps.bll.game.Result;\r\nimport rps.bll.game.ResultType;\r\nimport rps.bll.player.PlayerType;\r\nimport rps.gui.model.GameViewModel;\r\n\r\nimport java.net.URL;\r\nimport java.util.*;\r\n\r\n/**\r\n *\r\n * @author smsj\r\n */\r\npublic class GameViewController implements Initializable {\r\n    @FXML\r\n    private AnchorPane anchorPane;\r\n    @FXML\r\n    private Label labelHumanName, labelAIName, labelScore, labelAIChat, labelWinnerPlayer, labelWinnerMove;\r\n    @FXML\r\n    private ImageView imageActiveRPCPlayer, imageActiveRPCAI, imageAIPlayer, imageHumanPlayer, imageVersus, imageChatBox;\r\n    @FXML\r\n    private MFXTextField textFieldAI;\r\n    @FXML\r\n    private ImageView imageRockButton, imagePaperButton, imageScissorButton;\r\n    private final Image chatBox = new Image(\"Pictures/speech_bubble.png\");\r\n    private final Image versus = new Image(\"Pictures/versus.png\");\r\n    private final Image rock = new Image(\"Pictures/rock.png\");\r\n    private final Image paper = new Image(\"Pictures/paper.png\");\r\n    private final Image scissors = new Image(\"Pictures/scissors.png\");\r\n    private final Image questionR = new Image(\"Pictures/qRed.png\");\r\n    private final Image questionB = new Image(\"Pictures/qBlue.png\");\r\n\r\n    private final Image WallE = new Image(\"Pictures/WALL-E.png\");\r\n    private final Image HALL9000 = new Image(\"Pictures/HALL 9000.png\");\r\n    private final Image DALEK = new Image(\"Pictures/Dalek.png\");\r\n    private final Image TwoB = new Image(\"Pictures/YoRHa No.2 Type B.png\");\r\n    private List<Image> questionMarks = new ArrayList<>();\r\n    private GameViewModel gameViewModel;\r\n    private Timeline timeline;\r\n    private int currentIndex = 0;\r\n    private int cycleCount = 0;\r\n    String botName =\"\";\r\n\r\n\r\n    /**\r\n     * Initializes the controller class.\r\n     */\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle rb) {\r\n        imageChatBox.setImage(chatBox);\r\n        imageVersus.setImage(versus);\r\n        imageRockButton.setImage(rock);\r\n        imagePaperButton.setImage(paper);\r\n        imageScissorButton.setImage(scissors);\r\n        imageActiveRPCPlayer.setImage(questionR);\r\n        imageActiveRPCAI.setImage(questionB);\r\n        questionMarks.clear();\r\n        questionMarks.add(rock);\r\n        questionMarks.add(paper);\r\n        questionMarks.add(scissors);\r\n    }\r\n\r\n    public void setGameViewModel(GameViewModel model){\r\n        this.gameViewModel = model;\r\n    }\r\n\r\n    public void clickRock(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(rock);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(rock);\r\n                playRound(Move.Rock);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void clickPaper(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(paper);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(paper);\r\n                playRound(Move.Paper);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void clickScissor(MouseEvent mouseEvent) {\r\n        timeline = new Timeline();\r\n        imageActiveRPCPlayer.setImage(scissors);\r\n        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {\r\n            currentIndex = (currentIndex + 1) % questionMarks.size();\r\n            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));\r\n            if(currentIndex == 0)\r\n                cycleCount++;\r\n            if(cycleCount == 3){\r\n                timeline.stop();\r\n                imageActiveRPCAI.setImage(scissors);\r\n                playRound(Move.Scissor);\r\n                cycleCount = 0;\r\n            }\r\n\r\n        });\r\n\r\n        timeline.getKeyFrames().add(keyFrame);\r\n        timeline.setCycleCount(20);\r\n\r\n        timeline.play();\r\n\r\n    }\r\n\r\n    public void playRound(Move move) {\r\n        ArrayList<Result> results;\r\n        Result result;\r\n\r\n        gameViewModel.playRound(move);\r\n\r\n        results = gameViewModel.getHistoricResults();\r\n        result = results.get(results.size()-1);\r\n        int humanScore = 0;\r\n        int aiScore = 0;\r\n\r\n        if (result.getType().equals(ResultType.Tie)) {\r\n            if (move.equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (move.equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (move.equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n            displayTieMoveMessage(result.getLoserPlayer().getPlayerName());\r\n        }\r\n        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {\r\n            if (result.getWinnerMove().equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (result.getWinnerMove().equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (results.get(results.size() - 1).getWinnerMove().equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n            displayBadMoveMessage(result.getWinnerPlayer().getPlayerName());\r\n        }\r\n        if (result.getType().equals(ResultType.Win) && result.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {\r\n            if (result.getLoserMove().equals(Move.Rock))\r\n                imageActiveRPCAI.setImage(rock);\r\n            if (result.getLoserMove().equals(Move.Paper))\r\n                imageActiveRPCAI.setImage(paper);\r\n            if (result.getLoserMove().equals(Move.Scissor))\r\n                imageActiveRPCAI.setImage(scissors);\r\n            displayGoodMoveMessage(result.getLoserPlayer().getPlayerName());\r\n        }\r\n\r\n        for (Result res: results) {\r\n            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){\r\n                humanScore++;\r\n            }\r\n            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){\r\n                aiScore++;\r\n            }\r\n        }\r\n        if(result.getType().equals(ResultType.Tie)){\r\n            labelWinnerMove.setText(result.getWinnerMove() + \" ties with \" + result.getLoserMove());\r\n            labelWinnerPlayer.setText(\"Nobody wins this round\");\r\n        }\r\n        if(result.getType().equals(ResultType.Win)){\r\n            labelWinnerMove.setText(result.getWinnerMove() + \" beats \" + result.getLoserMove());\r\n            labelWinnerPlayer.setText(result.getWinnerPlayer().getPlayerName() + \" wins round \" + result.getRoundNumber());\r\n        }\r\n\r\n        labelScore.setText(humanScore + \"  -  \" + aiScore);\r\n\r\n\r\n    }\r\n    public void botSetup(String botName) {\r\n\r\n        labelAIName.setText(botName);\r\n\r\n        if (botName.equals(\"WALL-E\")) {\r\n            imageAIPlayer.setImage(WallE);\r\n        }\r\n        if (botName.equals(\"Dalek\")) {\r\n            imageAIPlayer.setImage(DALEK);\r\n        }\r\n        if (botName.equals(\"YoRHa No.2 Type B\")) {\r\n            imageAIPlayer.setImage(TwoB);\r\n        }\r\n        if (botName.equals(\"HALL 9000\")) {\r\n            imageAIPlayer.setImage(HALL9000);\r\n        }\r\n        displayStartOfGameMessage(botName);\r\n    }\r\n    private void displayStartOfGameMessage(String botName) {\r\n        if(botName.equals(\"WALL-E\")){\r\n            labelAIChat.setText(\"Pleased to meet you\");\r\n        }\r\n        if(botName.equals(\"Dalek\")){\r\n            labelAIChat.setText(\"I will exterminate!\");\r\n        }\r\n        if(botName.equals(\"YoRHa No.2 Type B\")){\r\n            labelAIChat.setText(\"Glory to Mankind\");\r\n        }\r\n        if(botName.equals(\"HALL 9000\")){\r\n            labelAIChat.setText(\"You may call me Hal\");\r\n        }\r\n    }\r\n    private void displayGoodMoveMessage(String botName) {\r\n        if(botName.equals(\"WALL-E\")){\r\n            labelAIChat.setText(\"Well played!\");\r\n        }\r\n        if(botName.equals(\"Dalek\")){\r\n            labelAIChat.setText(\"Exterminate!\");\r\n        }\r\n        if(botName.equals(\"YoRHa No.2 Type B\")){\r\n            labelAIChat.setText(\"I underestimated you\");\r\n        }\r\n        if(botName.equals(\"HALL 9000\")){\r\n            labelAIChat.setText(\"The 9000 series is the most reliable computer ever made.\");\r\n        }\r\n\r\n    }\r\n    private void displayBadMoveMessage(String botName) {\r\n        if(botName.equals(\"WALL-E\")){\r\n            labelAIChat.setText(\"Next time you will win\");\r\n        }\r\n        if(botName.equals(\"Dalek\")){\r\n            labelAIChat.setText(\"Dumb move fleshbag\");\r\n        }\r\n        if(botName.equals(\"YoRHa No.2 Type B\")){\r\n            labelAIChat.setText(\"Mission sucessful\");\r\n        }\r\n        if(botName.equals(\"HALL 9000\")){\r\n            labelAIChat.setText(\"Why are you doing this to me?\");\r\n        }\r\n\r\n    }\r\n    private void displayTieMoveMessage(String botName) {\r\n        if(botName.equals(\"WALL-E\")){\r\n            labelAIChat.setText(\"We're the same!\");\r\n        }\r\n        if(botName.equals(\"Dalek\")){\r\n            labelAIChat.setText(\"Did I exterminate?\");\r\n        }\r\n        if(botName.equals(\"YoRHa No.2 Type B\")){\r\n            labelAIChat.setText(\"You're no match for me\");\r\n        }\r\n        if(botName.equals(\"HALL 9000\")){\r\n            labelAIChat.setText(\"ERROR MESSAGE 404\");\r\n        }\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/rps/gui/controller/GameViewController.java b/src/rps/gui/controller/GameViewController.java
+--- a/src/rps/gui/controller/GameViewController.java	(revision a27a95e1eca7d75ff2f3758db5599c0facaac400)
++++ b/src/rps/gui/controller/GameViewController.java	(date 1677777315263)
+@@ -48,12 +48,14 @@
+     private final Image HALL9000 = new Image("Pictures/HALL 9000.png");
+     private final Image DALEK = new Image("Pictures/Dalek.png");
+     private final Image TwoB = new Image("Pictures/YoRHa No.2 Type B.png");
+-    private List<Image> questionMarks = new ArrayList<>();
++    private final List<Image> questionMarks = new ArrayList<>();
+     private GameViewModel gameViewModel;
+     private Timeline timeline;
+     private int currentIndex = 0;
+     private int cycleCount = 0;
+-    String botName ="";
++    private Image humanImage;
++    private Image aiImage;
++    private boolean isCycling = false;
+ 
+ 
+     /**
+@@ -79,50 +81,55 @@
+     }
+ 
+     public void clickRock(MouseEvent mouseEvent) {
+-        timeline = new Timeline();
+-        imageActiveRPCPlayer.setImage(rock);
+-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
+-            currentIndex = (currentIndex + 1) % questionMarks.size();
+-            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
+-            if(currentIndex == 0)
+-                cycleCount++;
+-            if(cycleCount == 3){
+-                timeline.stop();
+-                imageActiveRPCAI.setImage(rock);
+-                playRound(Move.Rock);
+-                cycleCount = 0;
+-            }
++        if(!isCycling) {
++            timeline = new Timeline();
++            imageActiveRPCPlayer.setImage(rock);
++            KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
++                currentIndex = (currentIndex + 1) % questionMarks.size();
++                imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
++                if (currentIndex == 0)
++                    cycleCount++;
++                if (cycleCount == 3) {
++                    timeline.stop();
++                    imageActiveRPCAI.setImage(rock);
++                    playRound(Move.Rock);
++                    cycleCount = 0;
++                    isCycling = false;
++                }
+ 
+-        });
++            });
+ 
+-        timeline.getKeyFrames().add(keyFrame);
+-        timeline.setCycleCount(20);
++            timeline.getKeyFrames().add(keyFrame);
++            timeline.setCycleCount(20);
+ 
+-        timeline.play();
++            timeline.play();
++        }
+ 
+     }
+ 
+     public void clickPaper(MouseEvent mouseEvent) {
+-        timeline = new Timeline();
+-        imageActiveRPCPlayer.setImage(paper);
+-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
+-            currentIndex = (currentIndex + 1) % questionMarks.size();
+-            imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
+-            if(currentIndex == 0)
+-                cycleCount++;
+-            if(cycleCount == 3){
+-                timeline.stop();
+-                imageActiveRPCAI.setImage(paper);
+-                playRound(Move.Paper);
+-                cycleCount = 0;
+-            }
++        if(!isCycling) {
++            timeline = new Timeline();
++            imageActiveRPCPlayer.setImage(paper);
++            KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
++                currentIndex = (currentIndex + 1) % questionMarks.size();
++                imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
++                if (currentIndex == 0)
++                    cycleCount++;
++                if (cycleCount == 3) {
++                    timeline.stop();
++                    imageActiveRPCAI.setImage(paper);
++                    playRound(Move.Paper);
++                    cycleCount = 0;
++                }
+ 
+-        });
++            });
+ 
+-        timeline.getKeyFrames().add(keyFrame);
+-        timeline.setCycleCount(20);
++            timeline.getKeyFrames().add(keyFrame);
++            timeline.setCycleCount(20);
+ 
+-        timeline.play();
++            timeline.play();
++        }
+ 
+     }
+ 
+@@ -210,22 +217,9 @@
+ 
+ 
+     }
+-    public void botSetup(String botName) {
+-
++    public void botSetup(String humanName, String botName) {
++        labelHumanName.setText(humanName);
+         labelAIName.setText(botName);
+-
+-        if (botName.equals("WALL-E")) {
+-            imageAIPlayer.setImage(WallE);
+-        }
+-        if (botName.equals("Dalek")) {
+-            imageAIPlayer.setImage(DALEK);
+-        }
+-        if (botName.equals("YoRHa No.2 Type B")) {
+-            imageAIPlayer.setImage(TwoB);
+-        }
+-        if (botName.equals("HALL 9000")) {
+-            imageAIPlayer.setImage(HALL9000);
+-        }
+         displayStartOfGameMessage(botName);
+     }
+     private void displayStartOfGameMessage(String botName) {
+@@ -288,4 +282,11 @@
+ 
+     }
+ 
++    public void setAIHumanImage(){
++        this.humanImage = gameViewModel.getHumanImage();
++        this.aiImage = gameViewModel.getAiImage();
++        imageHumanPlayer.setImage(humanImage);
++        imageAIPlayer.setImage(aiImage);
++    }
++
+ }
