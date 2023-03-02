@@ -56,12 +56,12 @@ public class GameViewController implements Initializable {
     private final Image questionR = new Image("Pictures/qRed.png");
     private final Image questionB = new Image("Pictures/qBlue.png");
     private final List<Image> questionMarks = new ArrayList<>();
-    private final Image health1 = new Image("Pictures/heartred.png");
-    private final Image health2 = new Image("Pictures/heartgreen.png");
-    private final Image health3 = new Image("Pictures/heartyellow.png");
-    private final Image health4 = new Image("Pictures/heartpurple.png");
-    private final Image health5 = new Image("Pictures/heartblue.png");
-    private final Image health0 = new Image("Pictures/heartgrey.png");
+    //private final Image health1 = new Image("Pictures/heartred.png");
+    //private final Image health2 = new Image("Pictures/heartgreen.png");
+    //private final Image health3 = new Image("Pictures/heartyellow.png");
+    //private final Image health4 = new Image("Pictures/heartpurple.png");
+    //private final Image health5 = new Image("Pictures/heartblue.png");
+    //private final Image health0 = new Image("Pictures/heartgrey.png");
     private GameViewModel gameViewModel;
     private Timeline timeline;
     private int currentIndex = 0;
@@ -88,26 +88,26 @@ public class GameViewController implements Initializable {
         questionMarks.add(scissors);
 
 
-        if(isHealthOn == true)
-        {
-            setHeartImages();
-        }
+        //if(isHealthOn == true)
+        //{
+        //    setHeartImages();
+        //}
     }
-    public boolean isHealthModeOn(int value)
-    {
-        if(value == 1)
+
+    public boolean isHealthModeOn(int value) {
+        if (value == 1)
             return isHealthOn = true;
         else
             return isHealthOn = false;
     }
 
 
-    public void setGameViewModel(GameViewModel model){
+    public void setGameViewModel(GameViewModel model) {
         this.gameViewModel = model;
     }
 
     public void clickRock(MouseEvent mouseEvent) {
-        if(!isCycling) {
+        if (!isCycling) {
             timeline = new Timeline();
             imageActiveRPCPlayer.setImage(rock);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
@@ -134,7 +134,7 @@ public class GameViewController implements Initializable {
     }
 
     public void clickPaper(MouseEvent mouseEvent) {
-        if(!isCycling) {
+        if (!isCycling) {
             timeline = new Timeline();
             imageActiveRPCPlayer.setImage(paper);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
@@ -165,9 +165,9 @@ public class GameViewController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
             currentIndex = (currentIndex + 1) % questionMarks.size();
             imageActiveRPCAI.setImage(questionMarks.get(currentIndex));
-            if(currentIndex == 0)
+            if (currentIndex == 0)
                 cycleCount++;
-            if(cycleCount == 3){
+            if (cycleCount == 3) {
                 timeline.stop();
                 imageActiveRPCAI.setImage(scissors);
                 playRound(Move.Scissor);
@@ -190,10 +190,10 @@ public class GameViewController implements Initializable {
         gameViewModel.playRound(move);
 
         results = gameViewModel.getHistoricResults();
-        result = results.get(results.size()-1);
+        result = results.get(results.size() - 1);
         int humanScore = 0;
         int aiScore = 0;
-        loseHealth(results);
+        //loseHealth(results);
 
 
         if (result.getType().equals(ResultType.Tie)) {
@@ -224,159 +224,165 @@ public class GameViewController implements Initializable {
             displayGoodMoveMessage(result.getLoserPlayer().getPlayerName());
         }
 
-        if(isHealthOn == false){
-        for (Result res: results) {
-            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
-                humanScore++;
+        if (isHealthOn == false) {
+            for (Result res : results) {
+                if (res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)) {
+                    humanScore++;
+                }
+                if (res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)) {
+                    aiScore++;
+                }
             }
-            if(res.getType().equals(ResultType.Win) && res.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
-                aiScore++;
-            }
-        }}
+        }
 
-        if(result.getType().equals(ResultType.Tie)){
+        if (result.getType().equals(ResultType.Tie)) {
             labelWinnerMove.setText(result.getWinnerMove() + " ties with " + result.getLoserMove());
             labelWinnerPlayer.setText("Nobody wins this round");
         }
-        if(result.getType().equals(ResultType.Win)){
+        if (result.getType().equals(ResultType.Win)) {
             labelWinnerMove.setText(result.getWinnerMove() + " beats " + result.getLoserMove());
             labelWinnerPlayer.setText(result.getWinnerPlayer().getPlayerName() + " wins round " + result.getRoundNumber());
         }
 
         labelScore.setText(humanScore + "  -  " + aiScore);
 
-        System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
-                + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
+        System.out.println(results.get(results.size() - 1).getRoundNumber() + ": " + results.get(results.size() - 1).getWinnerPlayer().getPlayerName() + " "
+                + results.get(results.size() - 1).getType() + "s with " + results.get(results.size() - 1).getWinnerMove());
     }
+
     public void botSetup(String humanName, String botName) {
         labelHumanName.setText(humanName);
         labelAIName.setText(botName);
         displayStartOfGameMessage(botName);
     }
+
     private void displayStartOfGameMessage(String botName) {
-        if(botName.equals("WALL-E")){
+        if (botName.equals("WALL-E")) {
             labelAIChat.setText("Pleased to meet you");
         }
-        if(botName.equals("Dalek")){
+        if (botName.equals("Dalek")) {
             labelAIChat.setText("I will exterminate!");
         }
-        if(botName.equals("YoRHa No.2 Type B")){
+        if (botName.equals("YoRHa No.2 Type B")) {
             labelAIChat.setText("Glory to Mankind");
         }
-        if(botName.equals("HALL 9000")){
+        if (botName.equals("HALL 9000")) {
             labelAIChat.setText("You may call me Hal");
         }
     }
+
     private void displayGoodMoveMessage(String botName) {
-        if(botName.equals("WALL-E")){
+        if (botName.equals("WALL-E")) {
             labelAIChat.setText("Well played!");
         }
-        if(botName.equals("Dalek")){
+        if (botName.equals("Dalek")) {
             labelAIChat.setText("Exterminate!");
         }
-        if(botName.equals("YoRHa No.2 Type B")){
+        if (botName.equals("YoRHa No.2 Type B")) {
             labelAIChat.setText("I underestimated you");
         }
-        if(botName.equals("HALL 9000")){
+        if (botName.equals("HALL 9000")) {
             labelAIChat.setText("The 9000 series is the most reliable computer ever made.");
         }
 
     }
+
     private void displayBadMoveMessage(String botName) {
-        if(botName.equals("WALL-E")){
+        if (botName.equals("WALL-E")) {
             labelAIChat.setText("Next time you will win");
         }
-        if(botName.equals("Dalek")){
+        if (botName.equals("Dalek")) {
             labelAIChat.setText("Dumb move fleshbag");
         }
-        if(botName.equals("YoRHa No.2 Type B")){
+        if (botName.equals("YoRHa No.2 Type B")) {
             labelAIChat.setText("Mission sucessful");
         }
-        if(botName.equals("HALL 9000")){
+        if (botName.equals("HALL 9000")) {
             labelAIChat.setText("Why are you doing this to me?");
         }
 
     }
+
     private void displayTieMoveMessage(String botName) {
-        if(botName.equals("WALL-E")){
+        if (botName.equals("WALL-E")) {
             labelAIChat.setText("We're the same!");
         }
-        if(botName.equals("Dalek")){
+        if (botName.equals("Dalek")) {
             labelAIChat.setText("Did I exterminate?");
         }
-        if(botName.equals("YoRHa No.2 Type B")){
+        if (botName.equals("YoRHa No.2 Type B")) {
             labelAIChat.setText("You're no match for me");
         }
-        if(botName.equals("HALL 9000")){
+        if (botName.equals("HALL 9000")) {
             labelAIChat.setText("ERROR MESSAGE 404");
         }
 
     }
 
-    public void setAIHumanImage(){
+    public void setAIHumanImage() {
         Image humanImage = gameViewModel.getHumanImage();
         Image aiImage = gameViewModel.getAiImage();
         imageHumanPlayer.setImage(humanImage);
         imageAIPlayer.setImage(aiImage);
     }
 
-    public void loseHealth(ArrayList<Result> results) {
-        int humanScore = 0;
-        int aiScore = 0;
-        for (Result r : results) {
-            if(isHealthOn == true) {
-                if (r.getPlayerHealthBar() == 4) {
-                    playerHealth1.setImage(health0);
+    //public void loseHealth(ArrayList<Result> results) {
+    //    int humanScore = 0;
+    //    int aiScore = 0;
+    //    for (Result r : results) {
+    //        if(isHealthOn == true) {
+    //            if (r.getPlayerHealthBar() == 4) {
+    //                playerHealth1.setImage(health0);
+//
+    //            } else if (r.getPlayerHealthBar() == 3) {
+    //                playerHealth2.setImage(health0);
+    //            } else if (r.getPlayerHealthBar() == 2) {
+    //                playerHealth3.setImage(health0);
+    //            } else if (r.getPlayerHealthBar() == 1) {
+    //                playerHealth4.setImage(health0);
+    //            }
+    //            else if(r.getPlayerHealthBar() == 0)
+    //            {
+    //                playerHealth5.setImage(health0);
+    //                aiScore++;
+    //                setHeartImages();
+    //                System.out.println("Player lose");
+    //            }
+//
+    //            if (r.getAiHealthBar() == 4) {
+    //                aiHealth5.setImage(health0);
+    //            } else if (r.getAiHealthBar() == 3) {
+    //                aiHealth4.setImage(health0);
+    //            } else if (r.getAiHealthBar() == 2) {
+    //                aiHealth3.setImage(health0);
+    //            } else if (r.getAiHealthBar() == 1) {
+    //                aiHealth2.setImage(health0);
+    //            }
+    //            else if(r.getAiHealthBar() == 0)
+    //            {
+    //                aiHealth1.setImage(health0);
+    //                humanScore++;
+    //                setHeartImages();
+    //            }
+    //            }
+    //        }
+    //    labelScore.setText(humanScore + "  -  " + aiScore);
+    //    }
 
-                } else if (r.getPlayerHealthBar() == 3) {
-                    playerHealth2.setImage(health0);
-                } else if (r.getPlayerHealthBar() == 2) {
-                    playerHealth3.setImage(health0);
-                } else if (r.getPlayerHealthBar() == 1) {
-                    playerHealth4.setImage(health0);
-                }
-                else if(r.getPlayerHealthBar() == 0)
-                {
-                    playerHealth5.setImage(health0);
-                    aiScore++;
-                    setHeartImages();
-                    System.out.println("Player lose");
-                }
 
-                if (r.getAiHealthBar() == 4) {
-                    aiHealth5.setImage(health0);
-                } else if (r.getAiHealthBar() == 3) {
-                    aiHealth4.setImage(health0);
-                } else if (r.getAiHealthBar() == 2) {
-                    aiHealth3.setImage(health0);
-                } else if (r.getAiHealthBar() == 1) {
-                    aiHealth2.setImage(health0);
-                }
-                else if(r.getAiHealthBar() == 0)
-                {
-                    aiHealth1.setImage(health0);
-                    humanScore++;
-                    setHeartImages();
-                }
-                }
-            }
-        labelScore.setText(humanScore + "  -  " + aiScore);
-        }
+   //    public void setHeartImages()
+   //    {
+   //        playerHealth1.setImage(health1);
+   //        playerHealth2.setImage(health2);
+   //        playerHealth3.setImage(health3);
+   //        playerHealth4.setImage(health4);
+   //        playerHealth5.setImage(health5);
 
-
-        public void setHeartImages()
-        {
-            playerHealth1.setImage(health1);
-            playerHealth2.setImage(health2);
-            playerHealth3.setImage(health3);
-            playerHealth4.setImage(health4);
-            playerHealth5.setImage(health5);
-
-            aiHealth1.setImage(health1);
-            aiHealth2.setImage(health2);
-            aiHealth3.setImage(health3);
-            aiHealth4.setImage(health4);
-            aiHealth5.setImage(health5);
-        }
-    }
+   //        aiHealth1.setImage(health1);
+   //        aiHealth2.setImage(health2);
+   //        aiHealth3.setImage(health3);
+   //        aiHealth4.setImage(health4);
+   //        aiHealth5.setImage(health5);
+   //    }
+   }
 

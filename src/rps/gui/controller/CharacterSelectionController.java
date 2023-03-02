@@ -38,8 +38,8 @@ public class CharacterSelectionController implements Initializable {
     private Image boulder = new Image("Pictures/boulder.png");
     private Image pain = new Image("Pictures/pain.png");
     private Image cat = new Image("Pictures/cat.png");
-    private Image imageWithHealth = new Image("Pictures/heartred.png");
-    private Image imageWithoutHealth = new Image("Pictures/heartgrey.png");
+    private Image imageWithHealth = new Image("Pictures/zucc.png");
+    private Image imageWithoutHealth = new Image("Pictures/zucc.png");
 
     private String humanName = "";
     private String aiName = "";
@@ -162,5 +162,11 @@ public class CharacterSelectionController implements Initializable {
         imageWallE.setImage(wallE);
 
 
+    }
+
+    public void clickWithoutHealth(MouseEvent mouseEvent) {
+    }
+
+    public void clickWithHealth(MouseEvent mouseEvent) {
     }
 }

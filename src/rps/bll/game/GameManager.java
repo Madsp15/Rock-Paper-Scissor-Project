@@ -13,14 +13,13 @@ import rps.bll.player.IPlayer;
  */
 public class GameManager {
 
-    private IGameState gameState;
-    private IPlayer bot;
-    private IPlayer human;
+    private final IGameState gameState;
+    private final IPlayer bot;
+    private final IPlayer human;
 
     /**
      * Initializes the GameManager with IPlayers
      * Game expected to be played Human vs Bot
-     * @param human
      * @param bot
      */
     public GameManager(IPlayer human, IPlayer bot) {

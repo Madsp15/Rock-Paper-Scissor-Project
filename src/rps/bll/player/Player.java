@@ -17,6 +17,7 @@ public class Player implements IPlayer {
 
     private String name;
     private PlayerType type;
+    private final MarkovChain markovChain = new MarkovChain();
     /**
      * @param name
      */
@@ -46,35 +47,8 @@ public class Player implements IPlayer {
      */
     @Override
     public Move doMove(IGameState state) {
-        //Historic data to analyze and decide next move...
-        ArrayList<Result> results = (ArrayList<Result>) state.getHistoricResults();
-        List<Move> moves = new ArrayList<>();
-        for (Result r : results) {
-            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Rock)
-                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Rock)) {
-                moves.add(Move.Rock);
-            }
-            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Paper)
-                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Paper)) {
-                moves.add(Move.Paper);
-            }
-            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Scissor)
-                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Scissor)) {
-                moves.add(Move.Scissor);
-            }
-        }
-
-
-
-        //50% chance to use simpleNextSequence
-        Random rnd = new Random();
-        int fiftyFifty = rnd.nextInt(((2-1)+1));
-        if(fiftyFifty == 1 && results.size()>0){
-            return simpleNextSequence(results);
-        }
-        else{
-            return previousThreeGuess(results);
-        }
+        GameState gameState = (GameState) state;
+        return markovPrediction(gameState);
 
     }
 
@@ -102,6 +76,43 @@ public class Player implements IPlayer {
             return Move.Rock;
 
         return null;
+    }
+
+    public Move markovPrediction(GameState gameState) {
+        List<Result> results = gameState.getHistoricResults();
+        if (results.size() <= 2) {
+            // No results yet, make a random move
+            return Move.values()[(int) (Math.random() * 3)];
+        } else {
+            Result lastResult = results.get(results.size() - 2);
+            Result nextResult = results.get(results.size() - 1);
+            //move ai made
+            Move previousMove = null;
+            //move human made next round
+            Move nextMove = null;
+            //checks if human player won the last two games
+            if(lastResult.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && nextResult.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
+                previousMove = lastResult.getLoserMove();
+                nextMove = nextResult.getWinnerMove();
+            }
+            //checks if ai won the last two games
+            if(lastResult.getWinnerPlayer().getPlayerType().equals(PlayerType.AI) && nextResult.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
+                previousMove = lastResult.getWinnerMove();
+                nextMove = nextResult.getLoserMove();
+            }
+            //checks if human won the first game and ai won the second game
+            if(lastResult.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && nextResult.getWinnerPlayer().getPlayerType().equals(PlayerType.AI)){
+                previousMove = lastResult.getLoserMove();
+                nextMove = nextResult.getLoserMove();
+            }
+            //checks if ai won the first game and human won the second game
+            if(lastResult.getWinnerPlayer().getPlayerType().equals(PlayerType.AI) && nextResult.getWinnerPlayer().getPlayerType().equals(PlayerType.Human)){
+                previousMove = lastResult.getWinnerMove();
+                nextMove = nextResult.getWinnerMove();
+            }
+            markovChain.updateTransitionMatrix(previousMove, nextMove);
+            return markovChain.predictNextMove(previousMove);
+        }
     }
 
     public Move previousThreeGuess(ArrayList<Result> results){

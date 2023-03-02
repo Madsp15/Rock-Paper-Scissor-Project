@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e212f816-7b0d-4eb2-a3eb-79f8f98f2bcb" name="Changes" comment="health stuff">
+      <change afterPath="$PROJECT_DIR$/src/rps/bll/player/MarkovChain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rps/bll/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rps/bll/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/bll/player/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/CharacterSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rps/gui/controller/GameViewController.java" afterDir="false" />
     </list>
