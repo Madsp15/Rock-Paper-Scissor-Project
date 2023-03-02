@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rps.gui.controller.GameViewController">
    <children>
       <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -83,7 +83,7 @@
                            </VBox.margin></Label>
                         <ImageView fx:id="imageAIPlayer" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-normal">
                            <image>
-                              <Image url="@/Pictures/2B.png" />
+                              <Image url="@/Pictures/YoRHa No.2 Type B.png" />
                            </image>
                            <VBox.margin>
                               <Insets left="50.0" right="50.0" />
@@ -96,7 +96,7 @@
                                     <Image url="@../../../../Resouces/Pictures/speech_bubble.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="labelAIChat" styleClass="label-chat" stylesheets="@style.css" text="prepare to die">
+                              <Label fx:id="labelAIChat" alignment="TOP_LEFT" prefHeight="30.0" prefWidth="126.0" styleClass="label-chat" stylesheets="@style.css" text="prepare to die" wrapText="true">
                                  <StackPane.margin>
                                     <Insets top="10.0" />
                                  </StackPane.margin>

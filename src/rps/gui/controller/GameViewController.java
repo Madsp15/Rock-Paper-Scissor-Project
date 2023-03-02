@@ -19,10 +19,7 @@ import rps.bll.player.PlayerType;
 import rps.gui.model.GameViewModel;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Timer;
+import java.util.*;
 
 /**
  *
@@ -46,11 +43,17 @@ public class GameViewController implements Initializable {
     private final Image scissors = new Image("Pictures/scissors.png");
     private final Image questionR = new Image("Pictures/qRed.png");
     private final Image questionB = new Image("Pictures/qBlue.png");
+
+    private final Image WallE = new Image("Pictures/WALL-E.png");
+    private final Image HALL9000 = new Image("Pictures/HALL 9000.png");
+    private final Image DALEK = new Image("Pictures/Dalek.png");
+    private final Image TwoB = new Image("Pictures/YoRHa No.2 Type B.png");
     private List<Image> questionMarks = new ArrayList<>();
     private GameViewModel gameViewModel;
     private Timeline timeline;
     private int currentIndex = 0;
     private int cycleCount = 0;
+    String botName ="";
 
 
     /**
@@ -185,4 +188,67 @@ public class GameViewController implements Initializable {
                 + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
 
     }
+    public void botSetup(String botName) {
+
+        labelAIName.setText(botName);
+
+        if (botName.equals("WALL-E")) {
+            imageAIPlayer.setImage(WallE);
+        }
+        if (botName.equals("Dalek")) {
+            imageAIPlayer.setImage(DALEK);
+        }
+        if (botName.equals("YoRHa No.2 Type B")) {
+            imageAIPlayer.setImage(TwoB);
+        }
+        if (botName.equals("HALL 9000")) {
+            imageAIPlayer.setImage(HALL9000);
+        }
+        displayStartOfGameMessage(botName);
+    }
+    private void displayStartOfGameMessage(String botName) {
+        if(botName.equals("WALL-E")){
+            labelAIChat.setText("Pleased to meet you");
+        }
+        if(botName.equals("Dalek")){
+            labelAIChat.setText("I will exterminate!");
+        }
+        if(botName.equals("YoRHa No.2 Type B")){
+            labelAIChat.setText("Glory to Mankind");
+        }
+        if(botName.equals("HALL 9000")){
+            labelAIChat.setText("You may call me Hal");
+        }
+    }
+    private void displayGoodMoveMessage(String botName) {
+        if(botName.equals("WALL-E")){
+            labelAIChat.setText("Well played!");
+        }
+        if(botName.equals("Dalek")){
+            labelAIChat.setText("Exterminate!");
+        }
+        if(botName.equals("YoRHa No.2 Type B")){
+            labelAIChat.setText("I underestimated you");
+        }
+        if(botName.equals("HALL 9000")){
+            labelAIChat.setText("The 9000 series is the most reliable computer ever made.");
+        }
+
+    }
+    private void displayBadMoveMessage(String botName) {
+        if(botName.equals("WALL-E")){
+            labelAIChat.setText("Next time you will win");
+        }
+        if(botName.equals("Dalek")){
+            labelAIChat.setText("Dumb move fleshbag");
+        }
+        if(botName.equals("YoRHa No.2 Type B")){
+            labelAIChat.setText("Mission sucessful");
+        }
+        if(botName.equals("HALL 9000")){
+            labelAIChat.setText("Why are you doing this to me?");
+        }
+
+    }
+
 }
