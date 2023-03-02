@@ -184,6 +184,8 @@ public class GameViewController implements Initializable {
                 imageActiveRPCAI.setImage(scissors);
         }
 
+        loseHealth(results);
+
         System.out.println(results.get(results.size()-1).getRoundNumber() + ": " + results.get(results.size()-1).getWinnerPlayer().getPlayerName() + " "
                 + results.get(results.size()-1).getType() + "s with " + results.get(results.size()-1).getWinnerMove());
 
@@ -251,4 +253,17 @@ public class GameViewController implements Initializable {
 
     }
 
+    public void loseHealth(ArrayList<Result> results) {
+
+        for (Result r : results) {
+            int playerHealthbar = r.getPlayerHealthBar();
+            int aiHealthbar = r.getAiHealthBar();
+
+            if (aiHealthbar == 0) {
+                System.out.println("AI LOSE");
+            } else if (playerHealthbar == 0) {
+                System.out.println("You lose!");
+            }
+        }
+    }
 }

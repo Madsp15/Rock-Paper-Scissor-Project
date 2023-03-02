@@ -12,6 +12,8 @@ public class GameState implements IGameState {
 
     private ArrayList<Result> historicResults;
     private int roundNumber;
+    private int aiHealthbar = 5;
+    private int playerHealthbar = 5;
 
     /**
      *
@@ -32,6 +34,27 @@ public class GameState implements IGameState {
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
+
+    @Override
+    public int getAiHealth() {
+        return aiHealthbar;
+    }
+
+    @Override
+    public void setAiHealth(int aiHealth) {
+        this.aiHealthbar = aiHealth;
+    }
+
+    @Override
+    public int getPlayerHealth() {
+        return playerHealthbar;
+    }
+
+    @Override
+    public void setPlayerHealth(int playerHealth) {
+        this.playerHealthbar = playerHealth;
+    }
+
 
     @Override
     public ArrayList<Result> getHistoricResults() {

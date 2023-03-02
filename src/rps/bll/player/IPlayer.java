@@ -32,4 +32,5 @@ public interface IPlayer {
      * @param state
      */
     public Move doMove(IGameState state);
+
 }

@@ -38,16 +38,22 @@ public class GameManager {
         Move bot_move = bot.doMove(gameState); //ask the bot to make a move...
         Result result;
         int roundNumber = gameState.getRoundNumber();
+        int aiHealthbar = gameState.getAiHealth();
+        int playerHealthBar = gameState.getPlayerHealth();
 
         //Rules
         if (human_move == bot_move)
-            result = new Result(human, human_move, bot, bot_move, ResultType.Tie, roundNumber);
+            result = new Result(human, human_move, bot, bot_move, ResultType.Tie, roundNumber, aiHealthbar, playerHealthBar);
         else if ((human_move == Move.Rock && bot_move == Move.Scissor) ||
                 (human_move == Move.Scissor && bot_move == Move.Paper) ||
                 (human_move == Move.Paper && bot_move == Move.Rock)) {
-            result = new Result(human, human_move, bot, bot_move, ResultType.Win, roundNumber);
+            result = new Result(human, human_move, bot, bot_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
+            gameState.setAiHealth(--aiHealthbar);
+            System.out.println(aiHealthbar);
         } else {
-            result = new Result(bot, bot_move, human, human_move, ResultType.Win, roundNumber);
+            result = new Result(bot, bot_move, human, human_move, ResultType.Win, roundNumber, aiHealthbar, playerHealthBar);
+            gameState.setPlayerHealth(--playerHealthBar);
+            System.out.println(playerHealthBar);
         }
 
         gameState.setRoundNumber(++roundNumber);

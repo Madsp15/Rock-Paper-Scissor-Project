@@ -15,6 +15,8 @@ public class Result {
     private Move loserMove;
     private IPlayer loserPlayer;
     private int roundNumber;
+    private int aiHealthBar;
+    private int playerHealthBar;
 
 
     /**
@@ -26,13 +28,15 @@ public class Result {
      * @param type
      * @param roundNumber
      */
-    public Result(IPlayer winnerPlayer, Move winnerMove, IPlayer loserPlayer, Move loserMove, ResultType type, int roundNumber) {
+    public Result(IPlayer winnerPlayer, Move winnerMove, IPlayer loserPlayer, Move loserMove, ResultType type, int roundNumber, int aiHealthBar, int playerHealthBar) {
         this.winnerPlayer = winnerPlayer;
         this.winnerMove = winnerMove;
         this.loserPlayer = loserPlayer;
         this.loserMove = loserMove;
         this.type = type;
         this.roundNumber = roundNumber;
+        this.aiHealthBar = aiHealthBar;
+        this.playerHealthBar = playerHealthBar;
     }
 
     public Move getWinnerMove() {
@@ -47,6 +51,17 @@ public class Result {
         return loserMove;
     }
 
+    public int getAiHealthBar()
+    {
+        return aiHealthBar;
+    }
+
+    public int getPlayerHealthBar()
+    {
+        return playerHealthBar;
+    }
+
+
     public IPlayer getLoserPlayer() {
         return loserPlayer;
     }
@@ -59,3 +74,5 @@ public class Result {
         return type;
     }
 }
+
+

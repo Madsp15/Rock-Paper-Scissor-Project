@@ -21,11 +21,16 @@ public interface IGameState {
      * @param roundNumber
      */
     void setRoundNumber(int roundNumber);
-
-
     /**
      * Returns a collection of the previous Results in the game
      * @return
      */
+
+    int getAiHealth();
+    void setAiHealth(int aiHealth);
+
+    int getPlayerHealth();
+    void setPlayerHealth(int playerHealth);
+
     Collection<Result> getHistoricResults();
 }

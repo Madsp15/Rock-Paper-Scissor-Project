@@ -5,6 +5,7 @@ import rps.bll.game.*;
 
 //Java imports
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -16,7 +17,6 @@ public class Player implements IPlayer {
 
     private String name;
     private PlayerType type;
-
     /**
      * @param name
      */
@@ -40,6 +40,7 @@ public class Player implements IPlayer {
 
     /**
      * Decides the next move for the bot...
+     *
      * @param state Contains the current game state including historic moves/results
      * @return Next move
      */
@@ -47,6 +48,22 @@ public class Player implements IPlayer {
     public Move doMove(IGameState state) {
         //Historic data to analyze and decide next move...
         ArrayList<Result> results = (ArrayList<Result>) state.getHistoricResults();
+        List<Move> moves = new ArrayList<>();
+        for (Result r : results) {
+            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Rock)
+                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Rock)) {
+                moves.add(Move.Rock);
+            }
+            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Paper)
+                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Paper)) {
+                moves.add(Move.Paper);
+            }
+            if (r.getWinnerPlayer().getPlayerType().equals(PlayerType.Human) && r.getWinnerMove().equals(Move.Scissor)
+                    || r.getLoserPlayer().getPlayerType().equals(PlayerType.Human) && r.getLoserMove().equals(Move.Scissor)) {
+                moves.add(Move.Scissor);
+            }
+        }
+
 
 
         //50% chance to use simpleNextSequence
@@ -137,8 +154,6 @@ public class Player implements IPlayer {
         if(rock == paper && paper == scissor) {
             return Move.Paper;
         }
-
-
         return null;
     }
 }
